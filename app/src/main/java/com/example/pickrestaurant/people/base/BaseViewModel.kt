@@ -4,7 +4,7 @@ import android.arch.lifecycle.ViewModel
 import com.example.pickrestaurant.people.injection.component.DaggerViewModelInjector
 import com.example.pickrestaurant.people.injection.component.ViewModelInjector
 import com.example.pickrestaurant.people.injection.module.NetworkModule
-import com.example.pickrestaurant.people.ui.login.LoginViewModel
+import com.example.pickrestaurant.people.login.LoginViewModel
 
 /**
  * Created by efren on 12/07/2018.

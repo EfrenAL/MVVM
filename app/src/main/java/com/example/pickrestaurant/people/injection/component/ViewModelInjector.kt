@@ -1,7 +1,7 @@
 package com.example.pickrestaurant.people.injection.component
 
 import com.example.pickrestaurant.people.injection.module.NetworkModule
-import com.example.pickrestaurant.people.ui.login.LoginViewModel
+import com.example.pickrestaurant.people.login.LoginViewModel
 import dagger.Component
 import javax.inject.Singleton
 

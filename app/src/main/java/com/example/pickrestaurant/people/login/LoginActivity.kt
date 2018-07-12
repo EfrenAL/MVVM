@@ -1,4 +1,4 @@
-package com.example.pickrestaurant.people.ui.login
+package com.example.pickrestaurant.people.login
 
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
