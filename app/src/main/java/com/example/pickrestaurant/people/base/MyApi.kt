@@ -13,12 +13,7 @@ import retrofit2.http.POST
 interface MyApi {
 
     @POST("/users")
-    fun createUser(): Observable<User>
-
-    /*@FormUrlEncoded
-    @POST("/users/login")
-    fun loginUser2(@Field("email") email: String,
-                  @Field("password") password: String): Observable<User>    @FormUrlEncoded*/
+    fun createUser(@Body post: UserSignupPostParameter): Observable<User>
 
     @POST("/users/login")
     fun loginUser(@Body post: UserLoginPostParameter): Observable<User>
@@ -26,3 +21,5 @@ interface MyApi {
 }
 
 data class UserLoginPostParameter(var email: String, var password: String)
+
+data class UserSignupPostParameter(var name: String, var email: String, var password: String)
