@@ -13,10 +13,10 @@ import retrofit2.http.POST
 interface MyApi {
 
     @POST("/users")
-    fun createUser(@Body post: UserSignupPostParameter): Observable<User>
+    fun createUser(@Body user: UserSignupPostParameter): Observable<User>
 
     @POST("/users/login")
-    fun loginUser(@Body post: UserLoginPostParameter): Observable<User>
+    fun loginUser(@Body user: UserLoginPostParameter): Observable<User>
 
 }
 

@@ -1,6 +1,7 @@
 package com.example.pickrestaurant.people.injection.module
 
 import com.example.pickrestaurant.people.base.MyApi
+import com.example.pickrestaurant.people.repositories.UserRepository
 import com.example.pickrestaurant.people.utils.BASE_URL
 import dagger.Module
 import dagger.Provides
@@ -44,6 +45,17 @@ object NetworkModule {
                 .addConverterFactory(MoshiConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io()))
                 .build()
+    }
+
+    /**
+     * Provides user repo.
+     * @return user repository
+     */
+    @Provides
+    @Reusable
+    @JvmStatic
+    internal fun provideUserRepository(myApi: MyApi): UserRepository {
+        return UserRepository(myApi)
     }
 
 }

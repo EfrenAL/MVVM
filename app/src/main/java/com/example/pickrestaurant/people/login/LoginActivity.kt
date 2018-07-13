@@ -4,6 +4,7 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import com.example.pickrestaurant.people.R
 import com.example.pickrestaurant.people.signup.SignupActivity
@@ -15,6 +16,8 @@ import kotlinx.android.synthetic.main.activity_login.*
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var viewModel: LoginViewModel
+    private var errorSnackbar: Snackbar? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,6 +27,18 @@ class LoginActivity : AppCompatActivity() {
         viewModel = ViewModelProviders.of(this).get(LoginViewModel::class.java)
 
         viewModel.loadingVisibility.observe(this, Observer { progressBar.visibility = it!! })
+
+        viewModel.errorMessage.observe(this, Observer { showError(it) })
+    }
+
+    private fun showError(errorMessage: Int?) {
+        if (errorMessage!=null){
+            errorSnackbar = Snackbar.make( coordinatorLayout, errorMessage, Snackbar.LENGTH_INDEFINITE)
+            errorSnackbar?.setAction(R.string.retry, viewModel.errorClickListener)
+            errorSnackbar?.show()
+        } else {
+            errorSnackbar?.dismiss()
+        }
     }
 
     private fun initUi() {
