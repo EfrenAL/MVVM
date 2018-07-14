@@ -24,6 +24,8 @@
         <activity
             android:name=".signup.SignupActivity">
         </activity>
-
+        <activity
+            android:name=".overview.OverviewActivity">
+        </activity>
     </application>
 </manifest>

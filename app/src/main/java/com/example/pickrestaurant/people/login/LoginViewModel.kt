@@ -28,6 +28,7 @@ class LoginViewModel: BaseViewModel() {
     private lateinit var password: String
 
     val loadingVisibility: MutableLiveData<Int> = MutableLiveData()
+    val loginSuccess: MutableLiveData<Boolean> = MutableLiveData()
     val errorMessage: MutableLiveData<Int> = MutableLiveData()
     val errorClickListener = View.OnClickListener { loginUser(this.email, this.password) }
 
@@ -64,10 +65,11 @@ class LoginViewModel: BaseViewModel() {
     }
 
     private fun onRetrieveLoginSuccess(user: User){
-
+        loginSuccess.value = true
     }
 
     private fun onRetrieveLoginError(error: Throwable, email: String, password: String){
+        loginSuccess.value = false
         errorMessage.value = R.string.post_error
         //Save state of email and password to retry
         this.email = email
