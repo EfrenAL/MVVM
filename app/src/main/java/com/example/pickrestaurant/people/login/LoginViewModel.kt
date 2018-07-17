@@ -13,7 +13,6 @@ import javax.inject.Inject
  */
 class LoginViewModel: BaseViewModel() {
 
-
     @Inject
     lateinit var userRepo: UserRepository
 

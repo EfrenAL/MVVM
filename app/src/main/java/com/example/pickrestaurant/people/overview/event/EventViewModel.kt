@@ -5,6 +5,7 @@ import android.view.View
 import com.example.pickrestaurant.people.base.BaseViewModel
 import com.example.pickrestaurant.people.model.Event
 import com.example.pickrestaurant.people.repositories.EventRepository
+
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
@@ -13,48 +14,24 @@ import javax.inject.Inject
 /**
  * Created by efren.lamolda on 13.07.18.
  */
-class EventViewModel: BaseViewModel() {
-
-    private lateinit var subscription: Disposable
+class EventViewModel : BaseViewModel() {
 
     @Inject
     lateinit var eventRepo: EventRepository
 
-    val loadingVisibility: MutableLiveData<Int> = MutableLiveData()
-    val events: MutableLiveData<ArrayList<Event>> = MutableLiveData()
+
+    var loadingVisibility: MutableLiveData<Int> = MutableLiveData()
+    var events: MutableLiveData<ArrayList<Event>> = MutableLiveData()
+    var errorMessage: MutableLiveData<Int> = MutableLiveData()
 
     init {
-        loadEvent("1")
+        events = eventRepo.data
+        loadingVisibility = eventRepo.loadingVisibility
+        errorMessage = eventRepo.errorMessage
+        getEvent("1")
     }
 
-
-    fun loadEvent(userId: String){
-
-        subscription = eventRepo.getEvents("1")
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe{onRetrieveLoginStart()}
-                .doOnTerminate{ onRetrieveLoginFinish()}
-                .subscribe(
-                        { onRetrieveLoginSuccess(it)},
-                        { onRetrieveLoginError()}
-                )
+    private fun getEvent(userToken: String) {
+        eventRepo.getEvents(userToken)
     }
-
-    private fun onRetrieveLoginStart(){
-        loadingVisibility.value = View.VISIBLE
-    }
-
-    private fun onRetrieveLoginFinish(){
-        loadingVisibility.value = View.GONE
-    }
-
-    private fun onRetrieveLoginSuccess(eventsList: ArrayList<Event>) {
-        events.value = eventsList
-    }
-
-    private fun onRetrieveLoginError(){}
-
-
-
 }

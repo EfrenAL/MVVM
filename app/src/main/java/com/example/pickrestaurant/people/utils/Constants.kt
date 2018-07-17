@@ -6,4 +6,4 @@ package com.example.pickrestaurant.people.utils
 
 
 /** The base URL of the API */
-const val BASE_URL: String = "https://fresh-server.herokuapp.com"
+const val BASE_URL: String = "https://bquini-api.herokuapp.com"

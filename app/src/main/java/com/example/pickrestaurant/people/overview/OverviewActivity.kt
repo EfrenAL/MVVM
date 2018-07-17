@@ -21,16 +21,13 @@ class OverviewActivity: AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_overview)
 
-        // Creates a vertical Layout Manager
-        rv_event_list.layoutManager = LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL, false)
-
         viewModel = ViewModelProviders.of(this).get(EventViewModel::class.java)
         viewModel.events.observe(this, Observer { showEvents(it) })
 
+        rv_event_list.layoutManager = LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL, false)
     }
 
     private fun showEvents(list: ArrayList<Event>?) {
         rv_event_list.adapter = EventAdapter(list!!, this)
     }
-
 }

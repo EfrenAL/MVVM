@@ -29,8 +29,8 @@ interface ViewModelInjector {
     fun inject(signUpViewModel: SignUpViewModel)
 
     /**
-     * Inject dependencies into signupViewModel
-     * @param signupViewModel SignUpViewModel in which to inject the dependencies
+     * Inject dependencies into eventViewModel
+     * @param eventViewModel EventViewModel in which to inject the dependencies
      */
     fun inject(eventViewModel: EventViewModel)
 

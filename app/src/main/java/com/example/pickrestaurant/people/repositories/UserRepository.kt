@@ -5,7 +5,7 @@ import android.view.View
 import com.example.pickrestaurant.people.R
 import com.example.pickrestaurant.people.base.MyApi
 import com.example.pickrestaurant.people.base.UserLoginPostParameter
-import com.example.pickrestaurant.people.base.UserSignupPostParameter
+import com.example.pickrestaurant.people.base.UserSignUpPostParameter
 import com.example.pickrestaurant.people.model.User
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -33,7 +33,7 @@ class UserRepository(private val myApi: MyApi) {
 
     fun signUpUser(name: String, email: String, password: String){
 
-        subscription = myApi.signUpUser(UserSignupPostParameter(name, email, password ))
+        subscription = myApi.signUpUser(UserSignUpPostParameter(name, email, password ))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe{onRetrieveStart()}
