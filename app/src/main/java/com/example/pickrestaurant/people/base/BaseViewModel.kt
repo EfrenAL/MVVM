@@ -5,7 +5,7 @@ import com.example.pickrestaurant.people.injection.component.DaggerViewModelInje
 import com.example.pickrestaurant.people.injection.component.ViewModelInjector
 import com.example.pickrestaurant.people.injection.module.NetworkModule
 import com.example.pickrestaurant.people.login.LoginViewModel
-import com.example.pickrestaurant.people.signup.SignupViewModel
+import com.example.pickrestaurant.people.signup.SignUpViewModel
 
 /**
  * Created by efren on 12/07/2018.
@@ -24,7 +24,7 @@ abstract class BaseViewModel: ViewModel() {
     private fun inject(){
         when (this) {
             is LoginViewModel -> injector.inject(this)
-            is SignupViewModel -> injector.inject(this)
+            is SignUpViewModel -> injector.inject(this)
         }
     }
 

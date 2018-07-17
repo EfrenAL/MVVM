@@ -22,7 +22,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".signup.SignupActivity">
+            android:name=".signup.SignUpActivity">
         </activity>
         <activity
             android:name=".overview.OverviewActivity">

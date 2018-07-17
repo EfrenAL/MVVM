@@ -3,7 +3,7 @@ package com.example.pickrestaurant.people.injection.component
 import com.example.pickrestaurant.people.injection.module.NetworkModule
 import com.example.pickrestaurant.people.login.LoginViewModel
 import com.example.pickrestaurant.people.overview.event.EventViewModel
-import com.example.pickrestaurant.people.signup.SignupViewModel
+import com.example.pickrestaurant.people.signup.SignUpViewModel
 import dagger.Component
 import javax.inject.Singleton
 
@@ -23,14 +23,14 @@ interface ViewModelInjector {
     fun inject(loginViewModel: LoginViewModel)
 
     /**
-     * Inject dependencies into signupViewModel
-     * @param signupViewModel SignupViewModel in which to inject the dependencies
+     * Inject dependencies into signUpViewModel
+     * @param signUpViewModel SignUpViewModel in which to inject the dependencies
      */
-    fun inject(signupViewModel: SignupViewModel)
+    fun inject(signUpViewModel: SignUpViewModel)
 
     /**
      * Inject dependencies into signupViewModel
-     * @param signupViewModel SignupViewModel in which to inject the dependencies
+     * @param signupViewModel SignUpViewModel in which to inject the dependencies
      */
     fun inject(eventViewModel: EventViewModel)
 

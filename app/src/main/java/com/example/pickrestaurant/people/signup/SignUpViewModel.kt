@@ -9,7 +9,7 @@ import javax.inject.Inject
 /**
  * Created by efren.lamolda on 12.07.18.
  */
-class SignupViewModel: BaseViewModel() {
+class SignUpViewModel: BaseViewModel() {
 
     @Inject
     lateinit var userRepo: UserRepository

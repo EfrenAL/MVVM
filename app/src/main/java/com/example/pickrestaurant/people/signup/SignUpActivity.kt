@@ -13,16 +13,16 @@ import kotlinx.android.synthetic.main.activity_signup.*
 /**
  * Created by efren.lamolda on 12.07.18.
  */
-class SignupActivity : AppCompatActivity(){
+class SignUpActivity : AppCompatActivity(){
 
-    private lateinit var viewModel: SignupViewModel
+    private lateinit var viewModel: SignUpViewModel
     private var errorSnackbar: Snackbar? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_signup)
         initUi()
-        viewModel = ViewModelProviders.of(this).get(SignupViewModel::class.java)
+        viewModel = ViewModelProviders.of(this).get(SignUpViewModel::class.java)
 
         viewModel.loadingVisibility.observe(this, Observer { progressBar.visibility = it!! })
         viewModel.errorMessage.observe(this, Observer { showError(it) })

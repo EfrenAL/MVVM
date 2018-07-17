@@ -8,7 +8,7 @@ import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import com.example.pickrestaurant.people.R
 import com.example.pickrestaurant.people.overview.OverviewActivity
-import com.example.pickrestaurant.people.signup.SignupActivity
+import com.example.pickrestaurant.people.signup.SignUpActivity
 import kotlinx.android.synthetic.main.activity_login.*
 
 /**
@@ -50,7 +50,7 @@ class LoginActivity : AppCompatActivity() {
         })
 
         link_signup.setOnClickListener({
-            startActivity(Intent(this, SignupActivity::class.java))
+            startActivity(Intent(this, SignUpActivity::class.java))
         })
     }
 
