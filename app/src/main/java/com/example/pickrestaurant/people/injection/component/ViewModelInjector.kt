@@ -2,6 +2,7 @@ package com.example.pickrestaurant.people.injection.component
 
 import com.example.pickrestaurant.people.injection.module.NetworkModule
 import com.example.pickrestaurant.people.login.LoginViewModel
+import com.example.pickrestaurant.people.overview.event.EventViewModel
 import com.example.pickrestaurant.people.signup.SignupViewModel
 import dagger.Component
 import javax.inject.Singleton
@@ -26,6 +27,12 @@ interface ViewModelInjector {
      * @param signupViewModel SignupViewModel in which to inject the dependencies
      */
     fun inject(signupViewModel: SignupViewModel)
+
+    /**
+     * Inject dependencies into signupViewModel
+     * @param signupViewModel SignupViewModel in which to inject the dependencies
+     */
+    fun inject(eventViewModel: EventViewModel)
 
     @Component.Builder
     interface Builder {

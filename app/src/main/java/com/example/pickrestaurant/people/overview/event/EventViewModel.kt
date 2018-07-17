@@ -8,6 +8,7 @@ import com.example.pickrestaurant.people.repositories.EventRepository
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import javax.inject.Inject
 
 /**
  * Created by efren.lamolda on 13.07.18.
@@ -15,6 +16,9 @@ import io.reactivex.schedulers.Schedulers
 class EventViewModel: BaseViewModel() {
 
     private lateinit var subscription: Disposable
+
+    @Inject
+    lateinit var eventRepo: EventRepository
 
     val loadingVisibility: MutableLiveData<Int> = MutableLiveData()
     val events: MutableLiveData<ArrayList<Event>> = MutableLiveData()
@@ -26,8 +30,7 @@ class EventViewModel: BaseViewModel() {
 
     fun loadEvent(userId: String){
 
-        var events: EventRepository = EventRepository()
-        subscription = events.getEvents("1")
+        subscription = eventRepo.getEvents("1")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe{onRetrieveLoginStart()}

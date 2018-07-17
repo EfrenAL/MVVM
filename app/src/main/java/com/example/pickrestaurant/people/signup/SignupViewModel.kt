@@ -35,7 +35,7 @@ class SignupViewModel: BaseViewModel() {
 
     fun signupUser(name:String, email: String, password: String ){
 
-        subscription = userRepo.sigunpUser(name, email, password )
+        subscription = userRepo.signupUser(name, email, password )
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe{onRetrieveSingupStart()}

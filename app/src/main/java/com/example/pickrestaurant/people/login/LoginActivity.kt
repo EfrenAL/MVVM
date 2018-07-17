@@ -32,7 +32,9 @@ class LoginActivity : AppCompatActivity() {
 
         viewModel.errorMessage.observe(this, Observer { showError(it) })
 
-        viewModel.loginSuccess.observe(this, Observer { if (it==true) startActivity(Intent(this, OverviewActivity::class.java)) })
+        viewModel.loginSuccess.observe(this, Observer {
+            if (it==true)
+                startActivity(Intent(this, OverviewActivity::class.java)) })
     }
 
     private fun showError(errorMessage: Int?) {
@@ -47,7 +49,7 @@ class LoginActivity : AppCompatActivity() {
 
     private fun initUi() {
         btn_login.setOnClickListener({
-            viewModel.loginUser(input_email.text.toString(), input_password.text.toString())
+            viewModel.loginUser2(input_email.text.toString(), input_password.text.toString())
         })
 
         link_signup.setOnClickListener({

@@ -1,6 +1,7 @@
 package com.example.pickrestaurant.people.injection.module
 
 import com.example.pickrestaurant.people.base.MyApi
+import com.example.pickrestaurant.people.repositories.EventRepository
 import com.example.pickrestaurant.people.repositories.UserRepository
 import com.example.pickrestaurant.people.utils.BASE_URL
 import dagger.Module
@@ -56,6 +57,17 @@ object NetworkModule {
     @JvmStatic
     internal fun provideUserRepository(myApi: MyApi): UserRepository {
         return UserRepository(myApi)
+    }
+
+    /**
+     * Provides event repo.
+     * @return event repository
+     */
+    @Provides
+    @Reusable
+    @JvmStatic
+    internal fun provideEventRepository(myApi: MyApi): EventRepository {
+        return EventRepository(myApi)
     }
 
 }
