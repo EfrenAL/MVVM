@@ -26,11 +26,12 @@ class SignupActivity : AppCompatActivity(){
 
         viewModel.loadingVisibility.observe(this, Observer { progressBar.visibility = it!! })
         viewModel.errorMessage.observe(this, Observer { showError(it) })
+        viewModel.signUpSuccess.observe(this, Observer { if (it==true) startActivity(Intent(this, LoginActivity::class.java)) })
     }
 
-    private fun showError(it: Int?) {
-        if (it!=null){
-            errorSnackbar = Snackbar.make( coordinatorLayout, it, Snackbar.LENGTH_INDEFINITE)
+    private fun showError(message: Int?) {
+        if (message!=null){
+            errorSnackbar = Snackbar.make( coordinatorLayout, message, Snackbar.LENGTH_INDEFINITE)
             errorSnackbar?.setAction(R.string.retry, viewModel.errorClickListener)
             errorSnackbar?.show()
         } else {
@@ -40,7 +41,7 @@ class SignupActivity : AppCompatActivity(){
 
     private fun initUi() {
         btn_signup.setOnClickListener({
-            viewModel.signupUser(input_name.text.toString(),input_email.text.toString(),input_password.text.toString())
+            viewModel.signUpUser(input_name.text.toString(),input_email.text.toString(),input_password.text.toString())
         })
 
         link_login.setOnClickListener({

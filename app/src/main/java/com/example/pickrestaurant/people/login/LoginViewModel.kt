@@ -23,20 +23,18 @@ class LoginViewModel: BaseViewModel() {
     var loadingVisibility: MutableLiveData<Int> = MutableLiveData()
     var loginSuccess: MutableLiveData<Boolean> = MutableLiveData()
     var errorMessage: MutableLiveData<Int> = MutableLiveData()
-    val errorClickListener = View.OnClickListener { loginUser2(this.email, this.password) }
-
+    val errorClickListener = View.OnClickListener { loginUser(this.email, this.password) }
 
     var user: LiveData<User>
-
 
     init {
         user = userRepo.data
         loadingVisibility = userRepo.loadingVisibility
         errorMessage = userRepo.errorMessage
-        loginSuccess = userRepo.loginSuccess
+        loginSuccess = userRepo.success
     }
 
-    fun loginUser2(email: String, password: String ){
+    fun loginUser(email: String, password: String ){
         userRepo.loginUser(email,password)
     }
 
