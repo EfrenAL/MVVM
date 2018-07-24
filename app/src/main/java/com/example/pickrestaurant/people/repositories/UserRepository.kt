@@ -11,6 +11,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import retrofit2.Response
+import javax.inject.Inject
 import javax.inject.Singleton
 
 /**
@@ -18,7 +19,7 @@ import javax.inject.Singleton
  */
 
 @Singleton
-class UserRepository(private val myApi: MyApi) {
+class UserRepository @Inject constructor(private val myApi: MyApi) {
 
     lateinit var subscription: Disposable
 
@@ -79,6 +80,10 @@ class UserRepository(private val myApi: MyApi) {
         data.value = it!!.body()
         data.value!!.authToken = it.headers().get("Auth")?: ""
         success.value = true
+    }
+
+    fun getUserToken(): String{
+        return data.value!!.authToken
     }
 
 }

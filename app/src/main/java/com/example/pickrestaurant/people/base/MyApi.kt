@@ -18,10 +18,12 @@ interface MyApi {
     fun loginUser(@Body user: UserLoginPostParameter): Observable<Response<User>>
 
     @GET("/user-event")
-    fun getEvents(@Header("Auth") auth: String): Observable<ArrayList<Event>>
+    fun getEvents(@Header("Auth") auth: String): Observable<EventsResponse>
 
 }
 
 data class UserLoginPostParameter(var email: String, var password: String)
 
 data class UserSignUpPostParameter(var name: String, var email: String, var password: String)
+
+data class EventsResponse(var user: User, var events: List<Event>)

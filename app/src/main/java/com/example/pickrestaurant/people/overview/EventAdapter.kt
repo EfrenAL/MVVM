@@ -13,7 +13,7 @@ import kotlinx.android.synthetic.main.event_item.view.*
 /**
  * Created by efren.lamolda on 15.07.18.
  */
-class EventAdapter(val events: ArrayList<Event>, val context: Context): RecyclerView.Adapter<EvnetViewHolder>() {
+class EventAdapter(val events: List<Event>, val context: Context): RecyclerView.Adapter<EvnetViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EvnetViewHolder {
         return EvnetViewHolder(LayoutInflater.from(context).inflate(R.layout.event_item, parent, false))

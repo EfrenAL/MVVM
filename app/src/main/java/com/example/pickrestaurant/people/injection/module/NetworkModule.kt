@@ -11,6 +11,7 @@ import io.reactivex.schedulers.Schedulers
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.moshi.MoshiConverterFactory
+import javax.inject.Singleton
 
 /**
  * Created by efren on 12/07/2018.
@@ -53,8 +54,8 @@ object NetworkModule {
      * @return user repository
      */
     @Provides
-    @Reusable
     @JvmStatic
+    @Singleton
     internal fun provideUserRepository(myApi: MyApi): UserRepository {
         return UserRepository(myApi)
     }
@@ -64,8 +65,8 @@ object NetworkModule {
      * @return event repository
      */
     @Provides
-    @Reusable
     @JvmStatic
+    @Singleton
     internal fun provideEventRepository(myApi: MyApi): EventRepository {
         return EventRepository(myApi)
     }

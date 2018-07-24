@@ -3,6 +3,7 @@ package com.example.pickrestaurant.people.repositories
 import android.arch.lifecycle.MutableLiveData
 import android.view.View
 import com.example.pickrestaurant.people.R
+import com.example.pickrestaurant.people.base.EventsResponse
 import com.example.pickrestaurant.people.base.MyApi
 import com.example.pickrestaurant.people.model.Event
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -19,7 +20,7 @@ import javax.inject.Singleton
 class EventRepository(private val myApi: MyApi) {
 
 
-    var data: MutableLiveData<ArrayList<Event>> = MutableLiveData()
+    var data: MutableLiveData<List<Event>> = MutableLiveData()
     val loadingVisibility: MutableLiveData<Int> = MutableLiveData()
     val errorMessage: MutableLiveData<Int> = MutableLiveData()
     val success: MutableLiveData<Boolean> = MutableLiveData()
@@ -54,8 +55,8 @@ class EventRepository(private val myApi: MyApi) {
         errorMessage.value = null
     }
 
-    private fun onRetrieveSuccess(it: ArrayList<Event>?) {
-        data.value = it!!
+    private fun onRetrieveSuccess(events: EventsResponse) {
+        data.value = events!!.events
         success.value = true
     }
 }

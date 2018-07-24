@@ -27,7 +27,7 @@ class OverviewActivity: AppCompatActivity() {
         rv_event_list.layoutManager = LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL, false)
     }
 
-    private fun showEvents(list: ArrayList<Event>?) {
+    private fun showEvents(list: List<Event>?) {
         rv_event_list.adapter = EventAdapter(list!!, this)
     }
 }
