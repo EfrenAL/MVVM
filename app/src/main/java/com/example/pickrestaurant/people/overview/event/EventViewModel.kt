@@ -1,7 +1,7 @@
 package com.example.pickrestaurant.people.overview.event
 
 import android.arch.lifecycle.MutableLiveData
-import com.example.pickrestaurant.people.base.BaseViewModel
+import android.arch.lifecycle.ViewModel
 import com.example.pickrestaurant.people.model.Event
 import com.example.pickrestaurant.people.repositories.EventRepository
 import com.example.pickrestaurant.people.repositories.UserRepository
@@ -10,15 +10,7 @@ import javax.inject.Inject
 /**
  * Created by efren.lamolda on 13.07.18.
  */
-class EventViewModel : BaseViewModel() {
-
-    @Inject
-    lateinit var userRepo: UserRepository
-
-    @Inject
-    lateinit var eventRepo: EventRepository
-
-
+class EventViewModel @Inject constructor(private var userRepo: UserRepository, private var eventRepo: EventRepository) : ViewModel() {
 
     var loadingVisibility: MutableLiveData<Int> = MutableLiveData()
     var events: MutableLiveData<List<Event>> = MutableLiveData()

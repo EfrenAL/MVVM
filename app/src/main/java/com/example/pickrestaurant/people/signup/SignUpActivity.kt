@@ -8,21 +8,28 @@ import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import com.example.pickrestaurant.people.R
 import com.example.pickrestaurant.people.login.LoginActivity
+import com.example.pickrestaurant.people.overview.event.EventViewModelFactory
+import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_signup.*
+import javax.inject.Inject
 
 /**
  * Created by efren.lamolda on 12.07.18.
  */
 class SignUpActivity : AppCompatActivity(){
 
+    @Inject
+    lateinit var signUpViewModelFactory: SignUpViewModelFactory
     private lateinit var viewModel: SignUpViewModel
     private var errorSnackbar: Snackbar? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_signup)
+        AndroidInjection.inject(this)
+
         initUi()
-        viewModel = ViewModelProviders.of(this).get(SignUpViewModel::class.java)
+        viewModel = ViewModelProviders.of(this, signUpViewModelFactory).get(SignUpViewModel::class.java)
 
         viewModel.loadingVisibility.observe(this, Observer { progressBar.visibility = it!! })
         viewModel.errorMessage.observe(this, Observer { showError(it) })

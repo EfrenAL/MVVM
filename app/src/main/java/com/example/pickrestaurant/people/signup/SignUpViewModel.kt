@@ -1,18 +1,15 @@
 package com.example.pickrestaurant.people.signup
 
 import android.arch.lifecycle.MutableLiveData
+import android.arch.lifecycle.ViewModel
 import android.view.View
-import com.example.pickrestaurant.people.base.BaseViewModel
 import com.example.pickrestaurant.people.repositories.UserRepository
 import javax.inject.Inject
 
 /**
  * Created by efren.lamolda on 12.07.18.
  */
-class SignUpViewModel: BaseViewModel() {
-
-    @Inject
-    lateinit var userRepo: UserRepository
+class SignUpViewModel @Inject constructor(private var userRepo: UserRepository): ViewModel() {
 
     private lateinit var email: String
     private lateinit var password: String

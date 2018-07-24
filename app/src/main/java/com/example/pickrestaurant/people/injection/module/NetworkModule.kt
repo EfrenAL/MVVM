@@ -1,8 +1,12 @@
 package com.example.pickrestaurant.people.injection.module
 
+import android.arch.lifecycle.ViewModelProvider
 import com.example.pickrestaurant.people.base.MyApi
+import com.example.pickrestaurant.people.login.LoginViewModelFactory
+import com.example.pickrestaurant.people.overview.event.EventViewModelFactory
 import com.example.pickrestaurant.people.repositories.EventRepository
 import com.example.pickrestaurant.people.repositories.UserRepository
+import com.example.pickrestaurant.people.signup.SignUpViewModelFactory
 import com.example.pickrestaurant.people.utils.BASE_URL
 import dagger.Module
 import dagger.Provides
@@ -71,4 +75,12 @@ object NetworkModule {
         return EventRepository(myApi)
     }
 
+    @Provides
+    fun provideLoginViewModelFactory(factory: LoginViewModelFactory): ViewModelProvider.Factory = factory
+
+    @Provides
+    fun provideEventViewModelFactory(factory: EventViewModelFactory): ViewModelProvider.Factory = factory
+
+    @Provides
+    fun provideSignUpViewModelFactory(factory: SignUpViewModelFactory): ViewModelProvider.Factory = factory
 }

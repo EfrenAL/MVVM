@@ -2,8 +2,8 @@ package com.example.pickrestaurant.people.login
 
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
+import android.arch.lifecycle.ViewModel
 import android.view.View
-import com.example.pickrestaurant.people.base.BaseViewModel
 import com.example.pickrestaurant.people.model.User
 import com.example.pickrestaurant.people.repositories.UserRepository
 import javax.inject.Inject
@@ -11,10 +11,8 @@ import javax.inject.Inject
 /**
  * Created by efren on 12/07/2018.
  */
-class LoginViewModel: BaseViewModel() {
+class LoginViewModel @Inject constructor(private var userRepo: UserRepository): ViewModel() {
 
-    @Inject
-    lateinit var userRepo: UserRepository
 
     private lateinit var email: String
     private lateinit var password: String
