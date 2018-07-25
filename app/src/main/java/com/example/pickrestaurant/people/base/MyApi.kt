@@ -3,6 +3,7 @@ package com.example.pickrestaurant.people.base
 import com.example.pickrestaurant.people.model.Event
 import com.example.pickrestaurant.people.model.User
 import io.reactivex.Observable
+import okhttp3.ResponseBody
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -19,6 +20,9 @@ interface MyApi {
 
     @GET("/user-event")
     fun getEvents(@Header("Auth") auth: String): Observable<EventsResponse>
+
+    @POST("/user-event/{eventCode}")
+    fun postEvent(@Header("Auth") auth: String, @Path("eventCode") eventCode: String): Observable<ResponseBody>
 
 }
 

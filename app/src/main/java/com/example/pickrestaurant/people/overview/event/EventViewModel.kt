@@ -1,6 +1,8 @@
 package com.example.pickrestaurant.people.overview.event
 
+import android.arch.lifecycle.LifecycleOwner
 import android.arch.lifecycle.MutableLiveData
+import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModel
 import com.example.pickrestaurant.people.model.Event
 import com.example.pickrestaurant.people.repositories.EventRepository
@@ -25,5 +27,9 @@ class EventViewModel @Inject constructor(private var userRepo: UserRepository, p
 
     private fun getEvent(userToken: String) {
         eventRepo.getEvents(userToken)
+    }
+
+    fun postEvent(eventCode: String){
+        eventRepo.postEvent(userRepo.getUserToken(), eventCode)
     }
 }

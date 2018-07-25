@@ -33,11 +33,11 @@ class EventRepository(private val myApi: MyApi) {
         subscription = myApi.getEvents(userToken)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe{onRetrieveStart()}
-                .doOnTerminate{ onRetrieveFinish()}
+                .doOnSubscribe { onRetrieveStart() }
+                .doOnTerminate { onRetrieveFinish() }
                 .subscribe(
-                        { onRetrieveSuccess(it)},
-                        { onRetrieveError(it)}
+                        { onRetrieveSuccess(it) },
+                        { onRetrieveError(it) }
                 )
     }
 
@@ -58,5 +58,17 @@ class EventRepository(private val myApi: MyApi) {
     private fun onRetrieveSuccess(events: EventsResponse) {
         data.value = events!!.events
         success.value = true
+    }
+
+    fun postEvent(userToken: String, eventCode: String) {
+        subscription = myApi.postEvent(userToken, eventCode)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe { onRetrieveStart() }
+                .doOnTerminate { onRetrieveFinish() }
+                .subscribe(
+                        { getEvents(userToken) },
+                        { onRetrieveError(it) }
+                )
     }
 }
