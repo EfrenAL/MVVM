@@ -1,4 +1,4 @@
-package com.example.pickrestaurant.people.overview
+package com.example.pickrestaurant.people.overview.event
 
 import android.content.Context
 import android.support.v7.widget.RecyclerView
