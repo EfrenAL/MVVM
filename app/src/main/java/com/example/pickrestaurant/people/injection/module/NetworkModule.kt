@@ -4,6 +4,7 @@ import android.arch.lifecycle.ViewModelProvider
 import com.example.pickrestaurant.people.base.MyApi
 import com.example.pickrestaurant.people.login.LoginViewModelFactory
 import com.example.pickrestaurant.people.overview.event.EventViewModelFactory
+import com.example.pickrestaurant.people.overview.people.PeopleViewModelFactory
 import com.example.pickrestaurant.people.repositories.EventRepository
 import com.example.pickrestaurant.people.repositories.UserRepository
 import com.example.pickrestaurant.people.signup.SignUpViewModelFactory
@@ -83,4 +84,7 @@ object NetworkModule {
 
     @Provides
     fun provideSignUpViewModelFactory(factory: SignUpViewModelFactory): ViewModelProvider.Factory = factory
+
+    @Provides
+    fun providePeopleViewModelFactory(factory: PeopleViewModelFactory): ViewModelProvider.Factory = factory
 }

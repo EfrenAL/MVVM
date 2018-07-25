@@ -4,14 +4,14 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import com.example.pickrestaurant.people.R
-import com.example.pickrestaurant.people.overview.event.EventViewModel
-import com.example.pickrestaurant.people.overview.event.EventViewModelFactory
+import com.example.pickrestaurant.people.model.User
 import dagger.android.support.AndroidSupportInjection
+import kotlinx.android.synthetic.main.fragment_people.*
 import javax.inject.Inject
 
 /**
@@ -20,8 +20,8 @@ import javax.inject.Inject
 class PeopleFragment: Fragment() {
 
     @Inject
-    lateinit var eventViewModelFactory: EventViewModelFactory
-    private lateinit var viewModel: EventViewModel
+    lateinit var peopleViewModelFactory: PeopleViewModelFactory
+    private lateinit var viewModel: PeopleViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_people, container, false)
@@ -32,9 +32,21 @@ class PeopleFragment: Fragment() {
         //configureDagger
         AndroidSupportInjection.inject(this)
         //configureViewModel
-        viewModel = ViewModelProviders.of(this, eventViewModelFactory).get(EventViewModel::class.java)
-        viewModel.events.observe(this, Observer { Toast.makeText(context,"test", Toast.LENGTH_SHORT) })
+        viewModel = ViewModelProviders.of(this, peopleViewModelFactory).get(PeopleViewModel::class.java)
+        viewModel.people.observe(this, Observer { showPeople(it) })
+
+        rv_people.layoutManager = LinearLayoutManager(activity!!.baseContext, LinearLayoutManager.VERTICAL, false)
     }
 
+    private fun showPeople(people: List<User>?) {
+        rv_people.adapter = PeopleAdapter(people!!, activity!!.baseContext, clickHandler())
+    }
 
+    private fun clickHandler(): PeopleAdapter.OnItemClickListener {
+        return object : PeopleAdapter.OnItemClickListener {
+            override fun onItemClick(item: User, position: Int) {
+
+            }
+        }
+    }
 }

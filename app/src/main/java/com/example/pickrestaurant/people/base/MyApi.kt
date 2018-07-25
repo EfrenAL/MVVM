@@ -24,6 +24,9 @@ interface MyApi {
     @POST("/user-event/{eventCode}")
     fun postEvent(@Header("Auth") auth: String, @Path("eventCode") eventCode: String): Observable<ResponseBody>
 
+    @GET("/event-user/{eventId}")
+    fun getPeople(@Header("Auth") auth: String, @Path("eventId") eventId: String): Observable<Response<PeopleResponse>>
+
 }
 
 data class UserLoginPostParameter(var email: String, var password: String)
@@ -31,3 +34,5 @@ data class UserLoginPostParameter(var email: String, var password: String)
 data class UserSignUpPostParameter(var name: String, var email: String, var password: String)
 
 data class EventsResponse(var user: User, var events: List<Event>)
+
+data class PeopleResponse(var user: Event, var users: List<User>)
