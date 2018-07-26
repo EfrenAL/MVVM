@@ -10,4 +10,6 @@
     <color name="colorSecondaryDark">#49a7cc</color>
     <color name="colorSecondaryLight">#b5ffff</color>
 
+    <color name="dark_grey">#a9a9a9</color>
+
 </resources>

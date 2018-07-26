@@ -8,9 +8,11 @@ import android.view.MenuItem
 import com.example.pickrestaurant.people.R
 import com.example.pickrestaurant.people.overview.event.EventsFragment
 import com.example.pickrestaurant.people.overview.people.PeopleFragment
+import com.example.pickrestaurant.people.overview.profile.ProfileFragment
 import dagger.android.AndroidInjection
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
+import kotlinx.android.synthetic.main.activity_overview.*
 import javax.inject.Inject
 
 
@@ -26,17 +28,22 @@ class OverviewActivity : AppCompatActivity(), HasSupportFragmentInjector, Events
         return dispatchingAndroidInjector
     }
 
+    private var profileFragment: ProfileFragment = ProfileFragment()
+    private var eventsFragment: EventsFragment = EventsFragment()
+    private var peopleFragment: PeopleFragment = PeopleFragment()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_overview)
 
         AndroidInjection.inject(this) //configureDagger
 
-        showFragment(savedInstanceState)
+        showMainFragments(savedInstanceState)
+        setNavigationBottom()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.main, menu)
+        menuInflater.inflate(R.menu.menu_main, menu)
         return true
     }
 
@@ -48,25 +55,55 @@ class OverviewActivity : AppCompatActivity(), HasSupportFragmentInjector, Events
     }
 
     override fun passData(eventId: String) {
-        val peopleFragment = PeopleFragment()
+        peopleFragment = PeopleFragment()
         val args = Bundle()
         args.putString(PeopleFragment.EVENT_ID, eventId)
         peopleFragment.arguments = args
         supportFragmentManager.beginTransaction()
-                .replace(R.id.fr_people, peopleFragment,null)
+                .replace(R.id.fr_people, peopleFragment, null)
                 .commit()
     }
 
-    private fun showFragment(savedInstanceState: Bundle?) {
-        if (savedInstanceState == null) {
-            supportFragmentManager.beginTransaction()
-                    .add(R.id.fr_events, EventsFragment(), null)
-                    .commit()
+    private fun setNavigationBottom() {
+        bottom_navigation.setOnNavigationItemSelectedListener {
+            when (it.itemId) {
+                R.id.action_profile -> showProfileFragment()
+                R.id.action_main -> showMainFragments(null)
+                else -> false
+            }
+        }
+    }
 
+    private fun showProfileFragment(): Boolean {
+        showFragment(profileFragment, R.id.activity_overview)
+        hideFragment(peopleFragment)
+        hideFragment(eventsFragment)
+        return true
+    }
+
+    private fun showMainFragments(savedInstanceState: Bundle?): Boolean {
+        if (savedInstanceState == null) {
+            hideFragment(profileFragment)
+            showFragment(eventsFragment, R.id.fr_events)
+            showFragment(peopleFragment, R.id.fr_people)
+
+        }
+        return true
+    }
+
+    private fun showFragment(fragment: Fragment, container: Int) {
+        if (fragment.isAdded)
+            supportFragmentManager.beginTransaction().show(fragment).commit()
+        else {
             supportFragmentManager.beginTransaction()
-                    .add(R.id.fr_people, PeopleFragment(), null)
+                    .add(container, fragment, null)
                     .commit()
         }
+    }
+
+    private fun hideFragment(fragment: Fragment) {
+        if (fragment.isAdded)
+            supportFragmentManager.beginTransaction().remove(fragment).commit()
     }
 
 

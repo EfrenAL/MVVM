@@ -14,6 +14,7 @@ import android.widget.EditText
 import com.example.pickrestaurant.people.R
 import com.example.pickrestaurant.people.model.Event
 import dagger.android.support.AndroidSupportInjection
+import kotlinx.android.synthetic.main.activity_overview.*
 import kotlinx.android.synthetic.main.fragment_events.*
 import javax.inject.Inject
 
@@ -73,7 +74,7 @@ class EventsFragment : Fragment() {
                 if (position == 0) {
                     showDialog()
                 } else {
-                    activity!!.title = event.name
+                    activity!!.toolbar_main.title = event.name
                     mCallback!!.passData(event.id.toString())
                 }
             }

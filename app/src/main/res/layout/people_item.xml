@@ -57,15 +57,34 @@
     </LinearLayout>
 
     <!-- Can be replaced by a widget -->
-    <ImageView
+    <ToggleButton
         android:id="@+id/iv_favourite"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_height="40dp"
+        android:layout_height="24dp"
+        android:layout_width="24dp"
         android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:layout_width="40dp"
-        android:scaleType="centerInside"
-        android:src="@drawable/ic_favorite_empty" />
+        android:background="@drawable/toggle_selector"
+        android:checked="true"
+        android:padding="6dp"
+        android:textOff=""
+        android:textOn="" />
+
+
+    <!-- <ToggleButton
+        android:id="@+id/iv_favourite"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:background="@drawable/toggle_selector"
+        android:checked="true"
+        android:padding="6dp"
+        android:textOff=""
+        android:textOn="" /> -->
 </RelativeLayout>

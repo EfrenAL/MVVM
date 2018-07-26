@@ -22,6 +22,7 @@ class PeopleFragment: Fragment() {
     @Inject
     lateinit var peopleViewModelFactory: PeopleViewModelFactory
     private lateinit var viewModel: PeopleViewModel
+
     companion object {
         const val EVENT_ID = "event_id"
     }
