@@ -20,10 +20,9 @@ class PeopleViewModel @Inject constructor(private var userRepo: UserRepository, 
         people = peopleRepo.data
         loadingVisibility = peopleRepo.loadingVisibility
         errorMessage = peopleRepo.errorMessage
-        getPeople(userRepo.getUserToken(), "1") //User repository is instantiated again is not a real singleton!!
     }
 
-    private fun getPeople(userToken: String, eventId: String) {
-        peopleRepo.getPeople(userToken, eventId)
+    fun getPeople(eventId: String) {
+        peopleRepo.getPeople(userRepo.getUserToken(), eventId)
     }
 }

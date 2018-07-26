@@ -17,7 +17,7 @@ import javax.inject.Inject
 /**
  * Created by efren.lamolda on 13.07.18.
  */
-class OverviewActivity : AppCompatActivity(), HasSupportFragmentInjector {
+class OverviewActivity : AppCompatActivity(), HasSupportFragmentInjector, EventsFragment.DataPassListener {
 
     @Inject
     lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
@@ -45,6 +45,16 @@ class OverviewActivity : AppCompatActivity(), HasSupportFragmentInjector {
         return if (id == R.id.action_settings) {
             true
         } else super.onOptionsItemSelected(item)
+    }
+
+    override fun passData(eventId: String) {
+        val peopleFragment = PeopleFragment()
+        val args = Bundle()
+        args.putString(PeopleFragment.EVENT_ID, eventId)
+        peopleFragment.arguments = args
+        supportFragmentManager.beginTransaction()
+                .replace(R.id.fr_people, peopleFragment,null)
+                .commit()
     }
 
     private fun showFragment(savedInstanceState: Bundle?) {

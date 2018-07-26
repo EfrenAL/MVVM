@@ -22,6 +22,9 @@ class PeopleFragment: Fragment() {
     @Inject
     lateinit var peopleViewModelFactory: PeopleViewModelFactory
     private lateinit var viewModel: PeopleViewModel
+    companion object {
+        const val EVENT_ID = "event_id"
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_people, container, false)
@@ -36,6 +39,14 @@ class PeopleFragment: Fragment() {
         viewModel.people.observe(this, Observer { showPeople(it) })
 
         rv_people.layoutManager = LinearLayoutManager(activity!!.baseContext, LinearLayoutManager.VERTICAL, false)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        val args = arguments
+        if (args != null) {
+            viewModel.getPeople(args.getString(EVENT_ID))
+        }
     }
 
     private fun showPeople(people: List<User>?) {
