@@ -5,4 +5,7 @@
     <string name="event_code">Event Code</string>
     <string name="add_event">Add Event</string>
     <string name="action_info">Event Information</string>
+    <string name="text_profile">Profile</string>
+    <string name="text_main">Main</string>
+    <string name="text_events">Events</string>
 </resources>
