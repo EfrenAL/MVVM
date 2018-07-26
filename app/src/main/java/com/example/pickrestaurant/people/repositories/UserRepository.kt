@@ -6,6 +6,7 @@ import com.example.pickrestaurant.people.R
 import com.example.pickrestaurant.people.base.MyApi
 import com.example.pickrestaurant.people.base.UserLoginPostParameter
 import com.example.pickrestaurant.people.base.UserSignUpPostParameter
+import com.example.pickrestaurant.people.base.UserUpdatePutParameter
 import com.example.pickrestaurant.people.model.User
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -84,6 +85,18 @@ class UserRepository @Inject constructor(private val myApi: MyApi) {
 
     fun getUserToken(): String{
         return data.value!!.authToken
+    }
+
+    fun updateUser(name: String, description: String) {
+        subscription = myApi.updateUser(UserUpdatePutParameter(name,description))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe{onRetrieveStart()}
+                .doOnTerminate{ onRetrieveFinish()}
+                .subscribe(
+                        { onRetrieveSuccess(it)},
+                        { onRetrieveError(it,"" , email, password)}
+                )
     }
 
 }

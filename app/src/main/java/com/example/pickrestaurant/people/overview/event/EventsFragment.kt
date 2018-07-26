@@ -43,7 +43,7 @@ class EventsFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         //configureDagger
         AndroidSupportInjection.inject(this)
-        //configureViewModel
+
         showEvents(listOf())
         //configureViewModel
         viewModel = ViewModelProviders.of(this, eventViewModelFactory).get(EventViewModel::class.java)

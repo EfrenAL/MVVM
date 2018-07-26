@@ -18,6 +18,9 @@ interface MyApi {
     @POST("/users/login")
     fun loginUser(@Body user: UserLoginPostParameter): Observable<Response<User>>
 
+    @PUT("/users")
+    fun updateUser(@Body user: UserUpdatePutParameter): Observable<Response<User>>
+
     @GET("/user-event")
     fun getEvents(@Header("Auth") auth: String): Observable<EventsResponse>
 
@@ -32,6 +35,8 @@ interface MyApi {
 data class UserLoginPostParameter(var email: String, var password: String)
 
 data class UserSignUpPostParameter(var name: String, var email: String, var password: String)
+
+data class UserUpdatePutParameter(var name: String, var description: String)
 
 data class EventsResponse(var user: User, var events: List<Event>)
 
