@@ -3,6 +3,8 @@ package com.example.pickrestaurant.people.overview
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
+import android.view.Menu
+import android.view.MenuItem
 import com.example.pickrestaurant.people.R
 import com.example.pickrestaurant.people.overview.event.EventsFragment
 import com.example.pickrestaurant.people.overview.people.PeopleFragment
@@ -33,6 +35,18 @@ class OverviewActivity : AppCompatActivity(), HasSupportFragmentInjector {
         showFragment(savedInstanceState)
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.main, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        val id = item!!.itemId
+        return if (id == R.id.action_settings) {
+            true
+        } else super.onOptionsItemSelected(item)
+    }
+
     private fun showFragment(savedInstanceState: Bundle?) {
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
@@ -44,4 +58,6 @@ class OverviewActivity : AppCompatActivity(), HasSupportFragmentInjector {
                     .commit()
         }
     }
+
+
 }

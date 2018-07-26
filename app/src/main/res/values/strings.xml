@@ -4,4 +4,5 @@
     <string name="retry">Retry</string>
     <string name="event_code">Event Code</string>
     <string name="add_event">Add Event</string>
+    <string name="action_info">Event Information</string>
 </resources>

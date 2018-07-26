@@ -53,9 +53,11 @@ class EventsFragment : Fragment() {
 
     private fun clickHandler(): EventAdapter.OnItemClickListener {
         return object : EventAdapter.OnItemClickListener {
-            override fun onItemClick(item: Event, position: Int) {
+            override fun onItemClick(event: Event, position: Int) {
                 if (position == 0) {
                     showDialog()
+                } else {
+                    activity!!.title = event.name
                 }
             }
         }
