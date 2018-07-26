@@ -1,6 +1,7 @@
 package com.example.pickrestaurant.people.repositories
 
 import android.arch.lifecycle.MutableLiveData
+import android.graphics.Bitmap
 import android.view.View
 import com.example.pickrestaurant.people.R
 import com.example.pickrestaurant.people.base.MyApi
@@ -98,5 +99,8 @@ class UserRepository @Inject constructor(private val myApi: MyApi) {
                         { onRetrieveError(it,"" , email, password)}
                 )
     }
-
+    fun setImage(picture:Bitmap){
+        data.value!!.picture = picture
+        data.postValue(data.value)
+    }
 }

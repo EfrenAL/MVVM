@@ -3,6 +3,7 @@ package com.example.pickrestaurant.people.overview.profile
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
+import android.graphics.Bitmap
 import com.example.pickrestaurant.people.model.User
 import com.example.pickrestaurant.people.repositories.UserRepository
 import javax.inject.Inject
@@ -34,5 +35,9 @@ class ProfileViewModel @Inject constructor(private var userRepo: UserRepository)
     override fun onCleared() {
         super.onCleared()
         userRepo.subscription.dispose()
+    }
+
+    fun setImage(picture: Bitmap){
+        userRepo.setImage(picture)
     }
 }
