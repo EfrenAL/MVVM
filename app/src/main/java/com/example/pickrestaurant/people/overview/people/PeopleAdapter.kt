@@ -1,6 +1,7 @@
 package com.example.pickrestaurant.people.overview.people
 
 import android.content.Context
+import android.graphics.drawable.Drawable
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +9,13 @@ import android.view.ViewGroup
 import com.example.pickrestaurant.people.R
 import com.example.pickrestaurant.people.model.User
 import kotlinx.android.synthetic.main.people_item.view.*
+import java.io.InputStream
+import java.net.URL
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.os.AsyncTask
+import android.util.Log
+import android.widget.ImageView
 
 
 /**
@@ -36,6 +44,7 @@ class UserViewHolder(var view: View) : RecyclerView.ViewHolder(view) {
 
     private val tvName = view.tv_name
     private val tvDescription = view.tv_description
+    private val ivPicture = view.iv_picture
 
     fun bind(user: User, listener: PeopleAdapter.OnItemClickListener, position: Int) {
 

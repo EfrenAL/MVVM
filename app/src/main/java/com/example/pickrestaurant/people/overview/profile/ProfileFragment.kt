@@ -43,10 +43,11 @@ class ProfileFragment: Fragment() {
     }
 
     private fun updateUi() {
-        tvEmail.text = viewModel.user.value!!.email
-        tvName.text = viewModel.user.value!!.name
-        tvDescription.text = viewModel.user.value!!.description
+        et_email.setText(viewModel.user.value!!.email)
+        et_name.setText(viewModel.user.value!!.name)
+        et_description.setText(viewModel.user.value!!.description)
         iv_profile_pic.setImageBitmap(viewModel.user.value!!.picture)
+        btn_update.setOnClickListener({ viewModel.updateUser(et_name.text.toString(), et_description.text.toString()) })
     }
 
     private fun setFab() {

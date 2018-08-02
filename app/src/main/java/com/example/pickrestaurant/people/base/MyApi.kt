@@ -19,7 +19,7 @@ interface MyApi {
     fun loginUser(@Body user: UserLoginPostParameter): Observable<Response<User>>
 
     @PUT("/users")
-    fun updateUser(@Body user: UserUpdatePutParameter): Observable<Response<User>>
+    fun updateUser(@Header("Auth") auth: String, @Body user: UserUpdatePutParameter): Observable<Response<User>>
 
     @GET("/user-event")
     fun getEvents(@Header("Auth") auth: String): Observable<EventsResponse>

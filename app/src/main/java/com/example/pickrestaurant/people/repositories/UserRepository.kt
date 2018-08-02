@@ -30,6 +30,8 @@ class UserRepository @Inject constructor(private val myApi: MyApi) {
     val errorMessage: MutableLiveData<Int> = MutableLiveData()
     val success: MutableLiveData<Boolean> = MutableLiveData()
 
+    lateinit var authToken: String
+
     private lateinit var email: String
     private lateinit var name: String
     private lateinit var password: String
@@ -80,16 +82,19 @@ class UserRepository @Inject constructor(private val myApi: MyApi) {
 
     private fun onRetrieveSuccess(it: Response<User>?) {
         data.value = it!!.body()
-        data.value!!.authToken = it.headers().get("Auth")?: ""
+
+        if(it.headers().get("Auth")!=null)
+            authToken = it.headers().get("Auth").toString()
+
         success.value = true
     }
 
     fun getUserToken(): String{
-        return data.value!!.authToken
+        return authToken
     }
 
     fun updateUser(name: String, description: String) {
-        subscription = myApi.updateUser(UserUpdatePutParameter(name,description))
+        subscription = myApi.updateUser(getUserToken(), UserUpdatePutParameter(name,description))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe{onRetrieveStart()}
