@@ -70,4 +70,8 @@ dependencies {
     implementation 'com.amazonaws:aws-android-sdk-s3:2.6.+'
     implementation 'com.amazonaws:aws-android-sdk-cognito:2.6.+'
 
+    //Glide
+    compile 'com.github.bumptech.glide:glide:3.5.2'
+    compile "com.android.support:support-v4:$android_support_version"
+
 }
