@@ -38,7 +38,8 @@ class UserRepository @Inject constructor(private val myApi: MyApi, private val c
     var data: MutableLiveData<User> = MutableLiveData()
     val loadingVisibility: MutableLiveData<Int> = MutableLiveData()
     val errorMessage: MutableLiveData<Int> = MutableLiveData()
-    val success: MutableLiveData<Boolean> = MutableLiveData()
+    val loginSuccess: MutableLiveData<Boolean> = MutableLiveData()
+    val signUpSuccess: MutableLiveData<Boolean> = MutableLiveData()
 
     lateinit var authToken: String
 
@@ -54,7 +55,7 @@ class UserRepository @Inject constructor(private val myApi: MyApi, private val c
                 .doOnSubscribe { onRetrieveStart() }
                 .doOnTerminate { onRetrieveFinish() }
                 .subscribe(
-                        { onRetrieveSuccess(it) },
+                        { onRetrieveSignUpSuccess(it) },
                         { onRetrieveError(it, name, email, password) }
                 )
     }
@@ -73,7 +74,7 @@ class UserRepository @Inject constructor(private val myApi: MyApi, private val c
     }
 
     private fun onRetrieveError(it: Throwable?, name: String, email: String, password: String) {
-        success.value = false
+        loginSuccess.value = false
         errorMessage.value = R.string.post_error
         //Save state of email and password to retry
         this.email = email
@@ -96,7 +97,13 @@ class UserRepository @Inject constructor(private val myApi: MyApi, private val c
         if (it.headers().get("Auth") != null)
             authToken = it.headers().get("Auth").toString()
 
-        success.value = true
+        loginSuccess.value = true
+    }
+
+    private fun onRetrieveSignUpSuccess(it: Response<User>?) {
+        data.value = it!!.body()
+        signUpSuccess.value = true
+        loginUser(data.value!!.email, data.value!!.password)
     }
 
     fun getUserToken(): String {

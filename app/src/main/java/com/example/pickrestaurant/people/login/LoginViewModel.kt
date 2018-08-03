@@ -28,7 +28,7 @@ class LoginViewModel @Inject constructor(private var userRepo: UserRepository): 
         user = userRepo.data
         loadingVisibility = userRepo.loadingVisibility
         errorMessage = userRepo.errorMessage
-        loginSuccess = userRepo.success
+        loginSuccess = userRepo.loginSuccess
     }
 
     fun loginUser(email: String, password: String ){

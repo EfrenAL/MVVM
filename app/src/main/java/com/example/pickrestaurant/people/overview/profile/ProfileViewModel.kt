@@ -22,7 +22,7 @@ class ProfileViewModel @Inject constructor(private var userRepo: UserRepository)
         user = userRepo.data
         loadingVisibility = userRepo.loadingVisibility
         errorMessage = userRepo.errorMessage
-        loginSuccess = userRepo.success
+        loginSuccess = userRepo.loginSuccess
     }
 
     fun updateUser(name: String, description: String, picture: String ){

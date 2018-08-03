@@ -23,7 +23,7 @@ class SignUpViewModel @Inject constructor(private var userRepo: UserRepository):
     init {
         loadingVisibility = userRepo.loadingVisibility
         errorMessage = userRepo.errorMessage
-        signUpSuccess = userRepo.success
+        signUpSuccess = userRepo.signUpSuccess
     }
 
     fun signUpUser(name:String, email: String, password: String ){
