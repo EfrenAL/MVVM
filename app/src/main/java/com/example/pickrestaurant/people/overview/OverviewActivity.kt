@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import com.amazonaws.mobile.client.AWSMobileClient
 import com.example.pickrestaurant.people.R
 import com.example.pickrestaurant.people.overview.event.EventsFragment
 import com.example.pickrestaurant.people.overview.people.PeopleFragment
@@ -40,6 +41,8 @@ class OverviewActivity : AppCompatActivity(), HasSupportFragmentInjector, Events
 
         showMainFragments(savedInstanceState)
         setNavigationBottom()
+
+        AWSMobileClient.getInstance().initialize(this).execute()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

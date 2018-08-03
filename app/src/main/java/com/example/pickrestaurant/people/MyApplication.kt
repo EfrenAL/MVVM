@@ -22,7 +22,7 @@ class MyApplication: Application(), HasActivityInjector {
 
         DaggerAppComponent
                 .builder()
-                .appModule(AppModule(this))
+                .appModule(AppModule(this, baseContext))
                 .networkModule(NetworkModule)
                 .build()
                 .inject(this)

@@ -25,8 +25,8 @@ class ProfileViewModel @Inject constructor(private var userRepo: UserRepository)
         loginSuccess = userRepo.success
     }
 
-    fun updateUser(name: String, description: String ){
-        userRepo.updateUser(name, description)
+    fun updateUser(name: String, description: String, picture: String ){
+        userRepo.updateUser(name, description, picture)
     }
 
     /**

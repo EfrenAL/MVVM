@@ -1,6 +1,7 @@
 package com.example.pickrestaurant.people.injection.module
 
 import android.arch.lifecycle.ViewModelProvider
+import android.content.Context
 import com.example.pickrestaurant.people.base.MyApi
 import com.example.pickrestaurant.people.login.LoginViewModelFactory
 import com.example.pickrestaurant.people.overview.event.EventViewModelFactory
@@ -62,8 +63,8 @@ object NetworkModule {
     @Provides
     @JvmStatic
     @Singleton
-    internal fun provideUserRepository(myApi: MyApi): UserRepository {
-        return UserRepository(myApi)
+    internal fun provideUserRepository(myApi: MyApi, context: Context): UserRepository {
+        return UserRepository(myApi, context)
     }
 
     /**
