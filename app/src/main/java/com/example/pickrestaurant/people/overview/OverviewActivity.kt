@@ -10,6 +10,9 @@ import com.example.pickrestaurant.people.R
 import com.example.pickrestaurant.people.overview.event.EventsFragment
 import com.example.pickrestaurant.people.overview.people.PeopleFragment
 import com.example.pickrestaurant.people.overview.profile.ProfileFragment
+import com.example.pickrestaurant.people.utils.OVERVIEW
+import com.example.pickrestaurant.people.utils.PARENT
+import com.example.pickrestaurant.people.utils.SIGNUP
 import dagger.android.AndroidInjection
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
@@ -78,6 +81,11 @@ class OverviewActivity : AppCompatActivity(), HasSupportFragmentInjector, Events
     }
 
     private fun showProfileFragment(): Boolean {
+
+        val args = Bundle()
+        args.putInt(PARENT, OVERVIEW)
+        profileFragment.arguments = args
+
         showFragment(profileFragment, R.id.activity_overview)
         hideFragment(peopleFragment)
         hideFragment(eventsFragment)

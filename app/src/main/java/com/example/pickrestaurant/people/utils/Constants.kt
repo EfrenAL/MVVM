@@ -7,3 +7,7 @@ package com.example.pickrestaurant.people.utils
 
 /** The base URL of the API */
 const val BASE_URL: String = "https://bquini-api.herokuapp.com"
+const val DEBUG_URL: String = "http://localhost:3000"
+const val PARENT: String = "parent"
+const val SIGNUP: Int = 0
+const val OVERVIEW: Int = 1

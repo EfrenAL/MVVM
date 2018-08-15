@@ -39,7 +39,7 @@ class UserRepository @Inject constructor(private val myApi: MyApi, private val c
     val loadingVisibility: MutableLiveData<Int> = MutableLiveData()
     val errorMessage: MutableLiveData<Int> = MutableLiveData()
     val loginSuccess: MutableLiveData<Boolean> = MutableLiveData()
-    val signUpSuccess: MutableLiveData<Boolean> = MutableLiveData()
+    val updateSuccess: MutableLiveData<Boolean> = MutableLiveData()
 
     lateinit var authToken: String
 
@@ -55,7 +55,10 @@ class UserRepository @Inject constructor(private val myApi: MyApi, private val c
                 .doOnSubscribe { onRetrieveStart() }
                 .doOnTerminate { onRetrieveFinish() }
                 .subscribe(
-                        { onRetrieveSignUpSuccess(it) },
+                        {
+                            onRetrieveSuccess(it)
+                            loginSuccess.value = true
+                        },
                         { onRetrieveError(it, name, email, password) }
                 )
     }
@@ -68,7 +71,10 @@ class UserRepository @Inject constructor(private val myApi: MyApi, private val c
                 .doOnSubscribe { onRetrieveStart() }
                 .doOnTerminate { onRetrieveFinish() }
                 .subscribe(
-                        { onRetrieveSuccess(it) },
+                        {
+                            onRetrieveSuccess(it)
+                            loginSuccess.value = true
+                        },
                         { onRetrieveError(it, "", email, password) }
                 )
     }
@@ -96,29 +102,25 @@ class UserRepository @Inject constructor(private val myApi: MyApi, private val c
 
         if (it.headers().get("Auth") != null)
             authToken = it.headers().get("Auth").toString()
-
-        loginSuccess.value = true
-    }
-
-    private fun onRetrieveSignUpSuccess(it: Response<User>?) {
-        data.value = it!!.body()
-        signUpSuccess.value = true
-        loginUser(data.value!!.email, data.value!!.password)
     }
 
     fun getUserToken(): String {
         return authToken
     }
 
-    fun updateUser(name: String, description: String?, picture: String) {
+    fun updateUser(name: String, description: String, picture: String) {
         subscription = myApi.updateUser(getUserToken(), UserUpdatePutParameter(name, description, picture))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe { onRetrieveStart() }
                 .doOnTerminate { onRetrieveFinish() }
                 .subscribe(
-                        { onRetrieveSuccess(it) },
-                        { onRetrieveError(it, "", email, password) }
+                        {
+                            onRetrieveSuccess(it)
+                            updateSuccess.value = true
+                        },
+                        { updateSuccess.value = false
+                            errorMessage.value = R.string.post_error }
                 )
     }
 

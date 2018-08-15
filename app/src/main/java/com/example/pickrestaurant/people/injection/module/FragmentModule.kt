@@ -3,6 +3,7 @@ package com.example.pickrestaurant.people.injection.module
 import com.example.pickrestaurant.people.overview.event.EventsFragment
 import com.example.pickrestaurant.people.overview.people.PeopleFragment
 import com.example.pickrestaurant.people.overview.profile.ProfileFragment
+import com.example.pickrestaurant.people.signup.SignUpFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -19,4 +20,7 @@ abstract class FragmentModule {
 
     @ContributesAndroidInjector
     abstract fun contributeProfileFragment(): ProfileFragment
+
+    @ContributesAndroidInjector
+    abstract fun contributeSignUpFragment(): SignUpFragment
 }

@@ -17,12 +17,13 @@ class ProfileViewModel @Inject constructor(private var userRepo: UserRepository)
     var loginSuccess: MutableLiveData<Boolean> = MutableLiveData()
     var errorMessage: MutableLiveData<Int> = MutableLiveData()
     var user: LiveData<User>
+    var updateSuccess: MutableLiveData<Boolean> = MutableLiveData()
 
     init {
         user = userRepo.data
         loadingVisibility = userRepo.loadingVisibility
         errorMessage = userRepo.errorMessage
-        loginSuccess = userRepo.loginSuccess
+        updateSuccess = userRepo.updateSuccess
     }
 
     fun updateUser(name: String, description: String, picture: String ){
