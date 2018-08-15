@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import com.bumptech.glide.Glide
 import com.example.pickrestaurant.people.R
 import com.example.pickrestaurant.people.model.User
-import kotlinx.android.synthetic.main.people_item.view.*
+import kotlinx.android.synthetic.main.item_people.view.*
 import com.bumptech.glide.load.resource.drawable.GlideDrawable
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
@@ -29,7 +29,7 @@ class PeopleAdapter(val people: List<User>, private val context: Context, privat
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, p1: Int): UserViewHolder {
-        return UserViewHolder(LayoutInflater.from(context).inflate(R.layout.people_item, parent, false))
+        return UserViewHolder(LayoutInflater.from(context).inflate(R.layout.item_people, parent, false))
     }
 
     override fun getItemCount(): Int {

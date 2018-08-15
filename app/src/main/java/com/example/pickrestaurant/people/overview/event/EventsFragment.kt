@@ -84,7 +84,7 @@ class EventsFragment : Fragment() {
 
     private fun showDialog() {
 
-        val view = layoutInflater.inflate(R.layout.event_code_dialog, null)
+        val view = layoutInflater.inflate(R.layout.dialog_event_code, null)
         val eventCode = view.findViewById<EditText>(R.id.et_event_code)
 
         AlertDialog.Builder(activity!!)

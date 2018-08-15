@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.pickrestaurant.people.R
 import com.example.pickrestaurant.people.model.Event
-import kotlinx.android.synthetic.main.event_item.view.*
+import kotlinx.android.synthetic.main.item_event.view.*
 
 
 /**
@@ -20,7 +20,7 @@ class EventAdapter(val events: List<Event>, val context: Context, val listener: 
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventViewHolder {
-        return EventViewHolder(LayoutInflater.from(context).inflate(R.layout.event_item, parent, false))
+        return EventViewHolder(LayoutInflater.from(context).inflate(R.layout.item_event, parent, false))
     }
 
     override fun onBindViewHolder(holder: EventViewHolder, position: Int) {
