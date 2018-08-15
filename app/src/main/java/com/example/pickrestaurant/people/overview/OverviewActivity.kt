@@ -39,6 +39,7 @@ class OverviewActivity : AppCompatActivity(), HasSupportFragmentInjector, Events
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_overview)
+        toolbar_main.title = getString(R.string.app_name)
 
         AndroidInjection.inject(this) //configureDagger
 
@@ -71,6 +72,7 @@ class OverviewActivity : AppCompatActivity(), HasSupportFragmentInjector, Events
     }
 
     private fun setNavigationBottom() {
+        bottom_navigation.selectedItemId = R.id.action_main
         bottom_navigation.setOnNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.action_profile -> showProfileFragment()

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">People</string>
+    <string name="app_name">Bquini</string>
     <string name="post_error">User name or password incorrect</string>
     <string name="retry">Retry</string>
     <string name="event_code">Event Code</string>
