@@ -1,6 +1,7 @@
 package com.example.pickrestaurant.people.injection.module
 
 import com.example.pickrestaurant.people.overview.event.EventsFragment
+import com.example.pickrestaurant.people.overview.events.EventsDetailsFragment
 import com.example.pickrestaurant.people.overview.people.PeopleFragment
 import com.example.pickrestaurant.people.overview.profile.ProfileFragment
 import com.example.pickrestaurant.people.signup.SignUpFragment
@@ -23,4 +24,7 @@ abstract class FragmentModule {
 
     @ContributesAndroidInjector
     abstract fun contributeSignUpFragment(): SignUpFragment
+
+    @ContributesAndroidInjector
+    abstract fun contributeEventsDetailsFragment(): EventsDetailsFragment
 }

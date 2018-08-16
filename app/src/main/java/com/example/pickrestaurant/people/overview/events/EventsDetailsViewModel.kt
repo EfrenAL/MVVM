@@ -1,4 +1,4 @@
-package com.example.pickrestaurant.people.overview.event
+package com.example.pickrestaurant.people.overview.events
 
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
@@ -8,9 +8,9 @@ import com.example.pickrestaurant.people.repositories.UserRepository
 import javax.inject.Inject
 
 /**
- * Created by efren.lamolda on 13.07.18.
+ * Created by efren.lamolda on 15.08.18.
  */
-class EventViewModel @Inject constructor(private var userRepo: UserRepository, private var eventRepo: EventRepository) : ViewModel() {
+class EventsDetailsViewModel @Inject constructor(private var userRepo: UserRepository, private var eventRepo: EventRepository) : ViewModel() {
 
     var loadingVisibility: MutableLiveData<Int> = MutableLiveData()
     var events: MutableLiveData<List<Event>> = MutableLiveData()
@@ -20,11 +20,11 @@ class EventViewModel @Inject constructor(private var userRepo: UserRepository, p
         events = eventRepo.data
         loadingVisibility = eventRepo.loadingVisibility
         errorMessage = eventRepo.errorMessage
-        getEvents(userRepo.getUserToken()) //User repository is instantiated again is not a real singleton!!
+        getEvents() //User repository is instantiated again is not a real singleton!!
     }
 
-    private fun getEvents(userToken: String) {
-        eventRepo.getEvents(userToken)
+    fun getEvents() {
+        eventRepo.getEvents(userRepo.getUserToken())
     }
 
     fun postEvent(eventCode: String){

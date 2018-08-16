@@ -8,11 +8,11 @@ import android.view.MenuItem
 import com.amazonaws.mobile.client.AWSMobileClient
 import com.example.pickrestaurant.people.R
 import com.example.pickrestaurant.people.overview.event.EventsFragment
+import com.example.pickrestaurant.people.overview.events.EventsDetailsFragment
 import com.example.pickrestaurant.people.overview.people.PeopleFragment
 import com.example.pickrestaurant.people.overview.profile.ProfileFragment
 import com.example.pickrestaurant.people.utils.OVERVIEW
 import com.example.pickrestaurant.people.utils.PARENT
-import com.example.pickrestaurant.people.utils.SIGNUP
 import dagger.android.AndroidInjection
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
@@ -35,15 +35,16 @@ class OverviewActivity : AppCompatActivity(), HasSupportFragmentInjector, Events
     private var profileFragment: ProfileFragment = ProfileFragment()
     private var eventsFragment: EventsFragment = EventsFragment()
     private var peopleFragment: PeopleFragment = PeopleFragment()
+    private var eventsDetailsFragment: EventsDetailsFragment = EventsDetailsFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_overview)
-        toolbar_main.title = getString(R.string.app_name)
+        //toolbar_main.title = getString(R.string.app_name)
 
         AndroidInjection.inject(this) //configureDagger
 
-        showMainFragments(savedInstanceState)
+        showMainFragments()
         setNavigationBottom()
 
         AWSMobileClient.getInstance().initialize(this).execute()
@@ -76,10 +77,21 @@ class OverviewActivity : AppCompatActivity(), HasSupportFragmentInjector, Events
         bottom_navigation.setOnNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.action_profile -> showProfileFragment()
-                R.id.action_main -> showMainFragments(null)
+                R.id.action_main -> showMainFragments()
+                R.id.action_events -> {
+                    showEventsDetailsFragment()
+                    true
+                }
                 else -> false
             }
         }
+    }
+
+    private fun showEventsDetailsFragment() {
+        supportFragmentManager.popBackStackImmediate()
+        supportFragmentManager.beginTransaction()
+                .replace(R.id.fr_events, eventsDetailsFragment, null)
+                .commit()
     }
 
     private fun showProfileFragment(): Boolean {
@@ -88,35 +100,39 @@ class OverviewActivity : AppCompatActivity(), HasSupportFragmentInjector, Events
         args.putInt(PARENT, OVERVIEW)
         profileFragment.arguments = args
 
-        showFragment(profileFragment, R.id.activity_overview)
-        hideFragment(peopleFragment)
-        hideFragment(eventsFragment)
+
+        supportFragmentManager.popBackStackImmediate()
+
+        supportFragmentManager.beginTransaction()
+                .replace(R.id.fr_events, profileFragment, null)
+                .commit()
+
         return true
     }
 
-    private fun showMainFragments(savedInstanceState: Bundle?): Boolean {
-        if (savedInstanceState == null) {
-            hideFragment(profileFragment)
-            showFragment(eventsFragment, R.id.fr_events)
-            showFragment(peopleFragment, R.id.fr_people)
 
-        }
+    private fun showMainFragments(): Boolean {
+
+        //hideFragment(profileFragment)
+        //hideFragment(eventsDetailsFragment)
+
+        supportFragmentManager.popBackStackImmediate()
+        supportFragmentManager.beginTransaction()
+                .replace(R.id.fr_events, eventsFragment, null)
+                .replace(R.id.fr_people, peopleFragment, null)
+                .commit()
+
+
         return true
-    }
-
-    private fun showFragment(fragment: Fragment, container: Int) {
-        if (fragment.isAdded)
-            supportFragmentManager.beginTransaction().show(fragment).commit()
-        else {
-            supportFragmentManager.beginTransaction()
-                    .add(container, fragment, null)
-                    .commit()
-        }
     }
 
     private fun hideFragment(fragment: Fragment) {
-        if (fragment.isAdded)
-            supportFragmentManager.beginTransaction().remove(fragment).commit()
+        //if (fragment.isAdded)
+            supportFragmentManager.popBackStackImmediate()
+
+            /*supportFragmentManager.beginTransaction()
+                    .hide(fragment)
+                    .commit()*/
     }
 
 

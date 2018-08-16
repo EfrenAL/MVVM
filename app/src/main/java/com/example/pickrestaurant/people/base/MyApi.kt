@@ -36,7 +36,7 @@ data class UserLoginPostParameter(var email: String, var password: String)
 
 data class UserSignUpPostParameter(var name: String, var email: String, var password: String)
 
-data class UserUpdatePutParameter(var name: String, var description: String, var pictureUrl: String)
+data class UserUpdatePutParameter(var name: String?, var description: String?, var pictureUrl: String?)
 
 data class EventsResponse(var user: User, var events: List<Event>)
 
