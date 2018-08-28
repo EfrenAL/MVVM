@@ -52,8 +52,8 @@ class SignUpFragment: Fragment() {
 
     private fun showError(message: Int?) {
         if (message != null) {
-            errorSnackbar = Snackbar.make(coordinatorLayout, message, Snackbar.LENGTH_INDEFINITE)
-            errorSnackbar?.setAction(R.string.retry, viewModel.errorClickListener)
+            errorSnackbar = Snackbar.make(coordinatorLayout, message, Snackbar.LENGTH_SHORT)
+            //errorSnackbar?.setAction(R.string.retry, viewModel.errorClickListener)
             errorSnackbar?.show()
         } else {
             errorSnackbar?.dismiss()

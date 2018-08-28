@@ -45,8 +45,8 @@ class LoginActivity : AppCompatActivity() {
 
     private fun showError(errorMessage: Int?) {
         if (errorMessage!=null){
-            errorSnackbar = Snackbar.make( coordinatorLayout, errorMessage, Snackbar.LENGTH_INDEFINITE)
-            errorSnackbar?.setAction(R.string.retry, viewModel.errorClickListener)
+            errorSnackbar = Snackbar.make( coordinatorLayout, errorMessage, Snackbar.LENGTH_SHORT)
+            //errorSnackbar?.setAction(R.string.retry, viewModel.errorClickListener)
             errorSnackbar?.show()
         } else {
             errorSnackbar?.dismiss()

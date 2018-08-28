@@ -41,7 +41,7 @@ class UserRepository @Inject constructor(private val myApi: MyApi, private val c
     val loginSuccess: MutableLiveData<Boolean> = MutableLiveData()
     val updateSuccess: MutableLiveData<Boolean> = MutableLiveData()
 
-    lateinit var authToken: String
+    private lateinit var authToken: String
 
     private lateinit var email: String
     private lateinit var name: String
@@ -49,21 +49,28 @@ class UserRepository @Inject constructor(private val myApi: MyApi, private val c
 
     fun signUpUser(name: String, email: String, password: String) {
 
+        if (name.isNullOrBlank() || email.isNullOrBlank() || password.isNullOrBlank()){
+            onRetrieveError()
+            return
+        }
+
         subscription = myApi.signUpUser(UserSignUpPostParameter(name, email, password))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe { onRetrieveStart() }
                 .doOnTerminate { onRetrieveFinish() }
                 .subscribe(
-                        {
-                            onRetrieveSuccess(it)
-                            loginSuccess.value = true
-                        },
-                        { onRetrieveError(it, name, email, password) }
+                        { onRetrieveSuccess(it) },
+                        { onRetrieveError() }
                 )
     }
 
     fun loginUser(email: String, password: String) {
+
+        if (email.isNullOrBlank() || password.isNullOrBlank()){
+            onRetrieveError()
+            return
+        }
 
         subscription = myApi.loginUser(UserLoginPostParameter(email, password))
                 .subscribeOn(Schedulers.io())
@@ -71,21 +78,14 @@ class UserRepository @Inject constructor(private val myApi: MyApi, private val c
                 .doOnSubscribe { onRetrieveStart() }
                 .doOnTerminate { onRetrieveFinish() }
                 .subscribe(
-                        {
-                            onRetrieveSuccess(it)
-                            loginSuccess.value = true
-                        },
-                        { onRetrieveError(it, "", email, password) }
+                        { onRetrieveSuccess(it) },
+                        { onRetrieveError() }
                 )
     }
 
-    private fun onRetrieveError(it: Throwable?, name: String, email: String, password: String) {
+    private fun onRetrieveError() {
         loginSuccess.value = false
         errorMessage.value = R.string.post_error
-        //Save state of email and password to retry
-        this.email = email
-        this.password = password
-        this.name = name
     }
 
     private fun onRetrieveFinish() {
@@ -98,11 +98,34 @@ class UserRepository @Inject constructor(private val myApi: MyApi, private val c
     }
 
     private fun onRetrieveSuccess(it: Response<User>?) {
+
+        if (it!!.code() != 200) {
+            onRetrieveError()
+            return
+        }
+        loginSuccess.value = true
+        saveDataResponse(it)
+    }
+
+
+    private fun onRetrieveUpdateSuccess(it: Response<User>?) {
+
+        if (it!!.code() != 200) {
+            onRetrieveError()
+            return
+        }
+
+        updateSuccess.value = true
+        saveDataResponse(it)
+    }
+
+    private fun saveDataResponse(it: Response<User>) {
         data.value = it!!.body()
 
         if (it.headers().get("Auth") != null)
             authToken = it.headers().get("Auth").toString()
     }
+
 
     fun getUserToken(): String {
         return authToken
@@ -115,12 +138,11 @@ class UserRepository @Inject constructor(private val myApi: MyApi, private val c
                 .doOnSubscribe { onRetrieveStart() }
                 .doOnTerminate { onRetrieveFinish() }
                 .subscribe(
+                        { onRetrieveUpdateSuccess(it) },
                         {
-                            onRetrieveSuccess(it)
-                            updateSuccess.value = true
-                        },
-                        { updateSuccess.value = false
-                            errorMessage.value = R.string.post_error }
+                            updateSuccess.value = false
+                            errorMessage.value = R.string.post_error
+                        }
                 )
     }
 
