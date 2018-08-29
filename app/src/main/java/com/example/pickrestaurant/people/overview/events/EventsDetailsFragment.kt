@@ -11,7 +11,6 @@ import android.view.ViewGroup
 import com.example.pickrestaurant.people.R
 import com.example.pickrestaurant.people.model.Event
 import dagger.android.support.AndroidSupportInjection
-import kotlinx.android.synthetic.main.fragment_events.*
 import kotlinx.android.synthetic.main.fragment_events_details.*
 import javax.inject.Inject
 
@@ -33,6 +32,8 @@ class EventsDetailsFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         //configureDagger
         AndroidSupportInjection.inject(this)
+
+        activity!!.toolbar_events_details.title = getString(R.string.app_name)
 
         //configureViewModel
         viewModel = ViewModelProviders.of(this, eventsDetailsViewModelFactory).get(EventsDetailsViewModel::class.java)

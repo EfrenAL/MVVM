@@ -6,7 +6,7 @@
     android:orientation="vertical">
 
     <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar_main"
+        android:id="@+id/toolbar_events_details"
         android:layout_width="match_parent"
         android:layout_alignParentTop="true"
         android:layout_height="?attr/actionBarSize"

@@ -44,6 +44,8 @@ class EventsFragment : Fragment() {
         //configureDagger
         AndroidSupportInjection.inject(this)
 
+        activity!!.toolbar_main.title = getString(R.string.app_name)
+
         showEvents(listOf())
         //configureViewModel
         viewModel = ViewModelProviders.of(this, eventViewModelFactory).get(EventViewModel::class.java)
