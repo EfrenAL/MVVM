@@ -63,7 +63,7 @@ class EventsFragment : Fragment() {
 
     private fun showEvents(list: List<Event>?) {
         var arrayList = ArrayList(list)
-        arrayList.add(0, Event(0, "New event", "AddEvent", ""))
+        arrayList.add(0, Event(0, "New event", "AddEvent", "","",""))
 
         rv_event_list.adapter = EventAdapter(arrayList!!, activity!!.baseContext, clickHandler())
     }

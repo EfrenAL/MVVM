@@ -5,8 +5,10 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.bumptech.glide.Glide
 import com.example.pickrestaurant.people.R
 import com.example.pickrestaurant.people.model.Event
+import com.example.pickrestaurant.people.utils.BUCKET_EVENT_URL
 import kotlinx.android.synthetic.main.item_event.view.*
 
 
@@ -24,7 +26,7 @@ class EventAdapter(val events: List<Event>, val context: Context, val listener: 
     }
 
     override fun onBindViewHolder(holder: EventViewHolder, position: Int) {
-        holder.bind(events[position], listener, position)
+        holder.bind(events[position], listener, position, context)
     }
 
     override fun getItemCount(): Int {
@@ -37,7 +39,7 @@ class EventViewHolder (var view: View) : RecyclerView.ViewHolder(view) {
     private val tv_event_name = view.tv_event_name
     private val iv_logo = view.iv_logo
 
-    fun bind(event: Event, listener: EventAdapter.OnItemClickListener, position: Int) {
+    fun bind(event: Event, listener: EventAdapter.OnItemClickListener, position: Int, context: Context) {
 
         tv_event_name?.text = event.name
         if (position == 0)
@@ -45,5 +47,10 @@ class EventViewHolder (var view: View) : RecyclerView.ViewHolder(view) {
         view.setOnClickListener({
             listener.onItemClick( event, position)
         })
+
+        if (!event.thumbnailUrl.isNullOrBlank())
+            Glide.with(context)
+                    .load(event.thumbnailUrl)
+                    .into(iv_logo)
     }
 }

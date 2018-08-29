@@ -12,6 +12,7 @@ import kotlinx.android.synthetic.main.item_people.view.*
 import com.bumptech.glide.load.resource.drawable.GlideDrawable
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
+import com.example.pickrestaurant.people.utils.BUCKET_URL
 import java.lang.Exception
 
 
@@ -52,7 +53,7 @@ class UserViewHolder(var view: View) : RecyclerView.ViewHolder(view) {
         })
         if (!user.pictureUrl.isNullOrBlank())
             Glide.with(context)
-                .load("https://s3.amazonaws.com/bquini-bucket/" + user.pictureUrl)
+                .load(BUCKET_URL + user.pictureUrl)
                 .into(ivPicture)
     }
 }
