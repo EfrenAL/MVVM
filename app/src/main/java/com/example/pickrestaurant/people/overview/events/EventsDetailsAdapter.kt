@@ -1,6 +1,9 @@
 package com.example.pickrestaurant.people.overview.events
 
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
+import android.support.v4.content.ContextCompat.startActivity
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -32,6 +35,8 @@ class EventsDetailsViewHolder(var view: View) : RecyclerView.ViewHolder(view) {
     private val subtitle_text = view.subtitle_text
     private val ivThumbnail = view.avatar_image
     private val ivPicture = view.media_image
+    private val btnWebSite = view.action_button_1
+    private val btnShare = view.action_button_2
 
     fun bind(event: Event, position: Int, context: Context) {
 
@@ -48,9 +53,8 @@ class EventsDetailsViewHolder(var view: View) : RecyclerView.ViewHolder(view) {
                     .load(event.thumbnailUrl)
                     .into(ivThumbnail)
 
-
-
-
-        //iv_logo?.setImageResource(R.drawable.ic_add)
+        btnWebSite.setOnClickListener({
+            startActivity(context, Intent( Intent.ACTION_VIEW , Uri.parse( event.webUrl )), null)
+        })
     }
 }

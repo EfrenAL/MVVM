@@ -8,4 +8,4 @@ data class Event(var id: Int,
                  var description: String,
                  var pictureUrl: String?,
                  var thumbnailUrl: String?,
-                 var web: String)
+                 var webUrl: String)
