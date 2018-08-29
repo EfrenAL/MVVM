@@ -50,8 +50,8 @@ class UserViewHolder(var view: View) : RecyclerView.ViewHolder(view) {
         view.setOnClickListener({
             listener.onItemClick(user, position)
         })
-
-        Glide.with(context)
+        if (!user.pictureUrl.isNullOrBlank())
+            Glide.with(context)
                 .load("https://s3.amazonaws.com/bquini-bucket/" + user.pictureUrl)
                 .into(ivPicture)
     }
