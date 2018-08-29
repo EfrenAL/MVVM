@@ -89,6 +89,10 @@ class OverviewActivity : AppCompatActivity(), HasSupportFragmentInjector, Events
 
     private fun showEventsDetailsFragment() {
         supportFragmentManager.popBackStackImmediate()
+        if(peopleFragment.isVisible)
+            supportFragmentManager.beginTransaction()
+                    .hide(peopleFragment)
+                    .commit()
         supportFragmentManager.beginTransaction()
                 .replace(R.id.fr_events, eventsDetailsFragment, null)
                 .commit()
