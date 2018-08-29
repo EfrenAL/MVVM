@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import com.example.pickrestaurant.people.R
 import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_signup.*
@@ -62,6 +63,7 @@ class SignUpFragment: Fragment() {
 
     private fun initUi() {
         btn_signup.setOnClickListener({
+            (activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager).hideSoftInputFromWindow(activity!!.currentFocus.windowToken, 0)
             viewModel.signUpUser(input_name.text.toString(), input_email.text.toString(), input_password.text.toString())
         })
 

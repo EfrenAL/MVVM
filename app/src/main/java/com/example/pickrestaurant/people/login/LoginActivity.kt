@@ -2,10 +2,12 @@ package com.example.pickrestaurant.people.login
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
+import android.view.inputmethod.InputMethodManager
 import com.example.pickrestaurant.people.R
 import com.example.pickrestaurant.people.overview.OverviewActivity
 import com.example.pickrestaurant.people.signup.SignUpActivity
@@ -55,6 +57,7 @@ class LoginActivity : AppCompatActivity() {
 
     private fun initUi() {
         btn_login.setOnClickListener({
+            (this?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager).hideSoftInputFromWindow(this.currentFocus.windowToken, 0)
             viewModel.loginUser(input_email.text.toString(), input_password.text.toString())
         })
 
