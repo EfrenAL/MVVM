@@ -165,7 +165,9 @@ class UserRepository @Inject constructor(private val myApi: MyApi, private val c
         uploadObserver.setTransferListener(object : TransferListener {
             override fun onStateChanged(id: Int, state: TransferState) {
                 if (state == TransferState.COMPLETED) {
-                    updateUser(data.value!!.name, data.value!!.description, remote)
+
+                    var desc = if (data.value!!.description!=null) data.value!!.description  else ""
+                    updateUser(data.value!!.name, desc , remote)
                 }
             }
 
