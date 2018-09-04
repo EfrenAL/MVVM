@@ -9,3 +9,7 @@
 .externalNativeBuild
 .idea/*
 App/.idea/
+.idea/misc.xml
+.idea/modules.xml
+gradle/wrapper/gradle-wrapper.properties
+app/local.properties
