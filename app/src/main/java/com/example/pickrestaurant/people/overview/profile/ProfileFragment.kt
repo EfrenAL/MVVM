@@ -70,9 +70,6 @@ class ProfileFragment : Fragment() {
             processImage(pictureUrl)
 
         btn_update.setOnClickListener { viewModel.updateUser(et_name.text.toString(), et_description.text.toString(), "") }
-
-
-
     }
 
     private fun processImage(pictureUrl: String) {
