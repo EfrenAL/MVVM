@@ -14,6 +14,11 @@ import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.example.pickrestaurant.people.utils.BUCKET_URL
 import java.lang.Exception
+import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory
+import android.support.v4.graphics.drawable.RoundedBitmapDrawable
+import android.graphics.Bitmap
+import com.bumptech.glide.request.target.BitmapImageViewTarget
+import com.bumptech.glide.load.resource.bitmap.TransformationUtils.centerCrop
 
 
 /**
@@ -48,12 +53,22 @@ class UserViewHolder(var view: View) : RecyclerView.ViewHolder(view) {
 
         tvName?.text = user.name
         tvDescription?.text = user.description
-        view.setOnClickListener({
+        view.setOnClickListener {
             listener.onItemClick(user, position)
-        })
+        }
         if (!user.pictureUrl.isNullOrBlank())
             Glide.with(context)
-                .load(BUCKET_URL + user.pictureUrl)
-                .into(ivPicture)
+                    .load(BUCKET_URL + user.pictureUrl)
+                    .asBitmap()
+                    .centerCrop()
+                    .into(object : BitmapImageViewTarget(ivPicture) {
+                        override fun setResource(resource: Bitmap) {
+                            val circularBitmapDrawable = RoundedBitmapDrawableFactory.create(context.resources, resource)
+                            circularBitmapDrawable.isCircular = true
+                            ivPicture.setImageDrawable(circularBitmapDrawable)
+                        }
+                    })
+
+
     }
 }

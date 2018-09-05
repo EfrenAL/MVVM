@@ -9,18 +9,21 @@ import android.graphics.Bitmap
 import android.os.Bundle
 import android.provider.MediaStore
 import android.support.v4.app.Fragment
+import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.target.BitmapImageViewTarget
 import com.example.pickrestaurant.people.R
 import com.example.pickrestaurant.people.signup.SignUpActivity
-import com.example.pickrestaurant.people.signup.SignUpFragment
+import com.example.pickrestaurant.people.utils.BUCKET_URL
 import com.example.pickrestaurant.people.utils.PARENT
 import com.example.pickrestaurant.people.utils.SIGNUP
 import dagger.android.support.AndroidSupportInjection
-import kotlinx.android.synthetic.main.fragment_profile.*
 import kotlinx.android.synthetic.main.fragment_profile_content.*
 import javax.inject.Inject
+
 
 /**
  * Created by efren.lamolda on 26.07.18.
@@ -40,7 +43,7 @@ class ProfileFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         parent = arguments!!.getInt(PARENT, 0)
-        return inflater.inflate(R.layout.fragment_profile, container, false)
+        return inflater.inflate(R.layout.fragment_profile2, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -61,19 +64,33 @@ class ProfileFragment : Fragment() {
         et_name.setText(viewModel.user.value!!.name)
         et_description.setText(viewModel.user.value!!.description)
 
-        var bitmap = viewModel.user.value!!.picture
-        if (bitmap != null)
-            iv_profile_pic.setImageBitmap(bitmap)
+        var pictureUrl = viewModel.user.value!!.pictureUrl
+        if (pictureUrl.isNotEmpty())
+            processImage(pictureUrl)
 
-        btn_update.setOnClickListener({ viewModel.updateUser(et_name.text.toString(), et_description.text.toString(), "") })
+        btn_update.setOnClickListener { viewModel.updateUser(et_name.text.toString(), et_description.text.toString(), "") }
+    }
+
+    private fun processImage(pictureUrl: String) {
+
+        Glide.with(context)
+                .load(BUCKET_URL + pictureUrl)
+                .asBitmap()
+                .centerCrop()
+                .into(object : BitmapImageViewTarget(iv_profile_pic) {
+                    override fun setResource(resource: Bitmap) {
+                        val circularBitmapDrawable = RoundedBitmapDrawableFactory.create(context!!.resources, resource)
+                        circularBitmapDrawable.isCircular = true
+                        iv_profile_pic.setImageDrawable(circularBitmapDrawable)
+                    }
+                })
     }
 
     private fun setFab() {
-        fab.setOnClickListener({
+        fab.setOnClickListener {
             val takePicture = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
             startActivityForResult(takePicture, 0)//zero can be replaced with any action code
-
-        })
+        }
     }
 
     override fun onAttach(context: Context?) {

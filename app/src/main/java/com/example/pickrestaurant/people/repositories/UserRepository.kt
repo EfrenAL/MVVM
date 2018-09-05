@@ -43,10 +43,6 @@ class UserRepository @Inject constructor(private val myApi: MyApi, private val c
 
     private lateinit var authToken: String
 
-    private lateinit var email: String
-    private lateinit var name: String
-    private lateinit var password: String
-
     fun signUpUser(name: String, email: String, password: String) {
 
         if (name.isNullOrBlank() || email.isNullOrBlank() || password.isNullOrBlank()){
@@ -98,7 +94,6 @@ class UserRepository @Inject constructor(private val myApi: MyApi, private val c
     }
 
     private fun onRetrieveSuccess(it: Response<User>?) {
-
         if (it!!.code() != 200) {
             onRetrieveError()
             return
@@ -109,7 +104,6 @@ class UserRepository @Inject constructor(private val myApi: MyApi, private val c
 
 
     private fun onRetrieveUpdateSuccess(it: Response<User>?) {
-
         if (it!!.code() != 200) {
             onRetrieveError()
             return
