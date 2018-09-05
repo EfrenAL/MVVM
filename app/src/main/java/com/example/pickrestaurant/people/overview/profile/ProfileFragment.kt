@@ -21,7 +21,8 @@ import com.example.pickrestaurant.people.utils.BUCKET_URL
 import com.example.pickrestaurant.people.utils.PARENT
 import com.example.pickrestaurant.people.utils.SIGNUP
 import dagger.android.support.AndroidSupportInjection
-import kotlinx.android.synthetic.main.fragment_profile_content.*
+import kotlinx.android.synthetic.main.fragment_profile.*
+import kotlinx.android.synthetic.main.fragment_profile_content2.*
 import javax.inject.Inject
 
 
@@ -43,7 +44,7 @@ class ProfileFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         parent = arguments!!.getInt(PARENT, 0)
-        return inflater.inflate(R.layout.fragment_profile2, container, false)
+        return inflater.inflate(R.layout.fragment_profile, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -65,10 +66,13 @@ class ProfileFragment : Fragment() {
         et_description.setText(viewModel.user.value!!.description)
 
         var pictureUrl = viewModel.user.value!!.pictureUrl
-        if (pictureUrl.isNotEmpty())
+        if (pictureUrl!= null && pictureUrl.isNotEmpty())
             processImage(pictureUrl)
 
         btn_update.setOnClickListener { viewModel.updateUser(et_name.text.toString(), et_description.text.toString(), "") }
+
+
+
     }
 
     private fun processImage(pictureUrl: String) {
