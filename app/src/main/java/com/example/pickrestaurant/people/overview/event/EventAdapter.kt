@@ -44,9 +44,9 @@ class EventViewHolder (var view: View) : RecyclerView.ViewHolder(view) {
         tv_event_name?.text = event.name
         if (position == 0)
             iv_logo?.setImageResource(R.drawable.ic_add)
-        view.setOnClickListener({
+        view.setOnClickListener {
             listener.onItemClick( event, position)
-        })
+        }
 
         if (!event.thumbnailUrl.isNullOrBlank())
             Glide.with(context)

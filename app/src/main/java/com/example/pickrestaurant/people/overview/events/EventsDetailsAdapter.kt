@@ -53,8 +53,17 @@ class EventsDetailsViewHolder(var view: View) : RecyclerView.ViewHolder(view) {
                     .load(event.thumbnailUrl)
                     .into(ivThumbnail)
 
-        btnWebSite.setOnClickListener({
+        btnWebSite.setOnClickListener {
             startActivity(context, Intent( Intent.ACTION_VIEW , Uri.parse( event.webUrl )), null)
-        })
+        }
+
+        btnShare.setOnClickListener {
+            val sendIntent: Intent = Intent().apply {
+                action = Intent.ACTION_SEND
+                putExtra(Intent.EXTRA_TEXT, event.webUrl )
+                type = "text/plain"
+            }
+            startActivity(context, Intent.createChooser(sendIntent, "Share with"),null)
+        }
     }
 }
