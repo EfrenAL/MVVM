@@ -11,5 +11,6 @@ const val DEBUG_URL: String = "http://localhost:3000"
 const val BUCKET_URL: String = "https://s3.amazonaws.com/bquini-bucket/"
 const val BUCKET_EVENT_URL: String = "https://s3.amazonaws.com/bquini-bucket/event/"
 const val PARENT: String = "parent"
+const val USERID: String = "userId"
 const val SIGNUP: Int = 0
 const val OVERVIEW: Int = 1

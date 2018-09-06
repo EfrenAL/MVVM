@@ -5,20 +5,10 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.bumptech.glide.Glide
 import com.example.pickrestaurant.people.R
 import com.example.pickrestaurant.people.model.User
+import com.example.pickrestaurant.people.utils.loadImage
 import kotlinx.android.synthetic.main.item_people.view.*
-import com.bumptech.glide.load.resource.drawable.GlideDrawable
-import com.bumptech.glide.request.RequestListener
-import com.bumptech.glide.request.target.Target
-import com.example.pickrestaurant.people.utils.BUCKET_URL
-import java.lang.Exception
-import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory
-import android.support.v4.graphics.drawable.RoundedBitmapDrawable
-import android.graphics.Bitmap
-import com.bumptech.glide.request.target.BitmapImageViewTarget
-import com.bumptech.glide.load.resource.bitmap.TransformationUtils.centerCrop
 
 
 /**
@@ -57,18 +47,6 @@ class UserViewHolder(var view: View) : RecyclerView.ViewHolder(view) {
             listener.onItemClick(user, position)
         }
         if (!user.pictureUrl.isNullOrBlank())
-            Glide.with(context)
-                    .load(BUCKET_URL + user.pictureUrl)
-                    .asBitmap()
-                    .centerCrop()
-                    .into(object : BitmapImageViewTarget(ivPicture) {
-                        override fun setResource(resource: Bitmap) {
-                            val circularBitmapDrawable = RoundedBitmapDrawableFactory.create(context.resources, resource)
-                            circularBitmapDrawable.isCircular = true
-                            ivPicture.setImageDrawable(circularBitmapDrawable)
-                        }
-                    })
-
-
+            user.loadImage(context, ivPicture)
     }
 }

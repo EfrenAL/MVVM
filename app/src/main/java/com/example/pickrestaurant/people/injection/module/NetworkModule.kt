@@ -8,6 +8,7 @@ import com.example.pickrestaurant.people.overview.event.EventViewModelFactory
 import com.example.pickrestaurant.people.overview.events.EventsDetailsViewModelFactory
 import com.example.pickrestaurant.people.overview.people.PeopleViewModelFactory
 import com.example.pickrestaurant.people.overview.profile.ProfileViewModelFactory
+import com.example.pickrestaurant.people.personDetails.PersonDetailsViewModelFactory
 import com.example.pickrestaurant.people.repositories.EventRepository
 import com.example.pickrestaurant.people.repositories.UserRepository
 import com.example.pickrestaurant.people.signup.SignUpViewModelFactory
@@ -93,4 +94,7 @@ object NetworkModule {
 
     @Provides
     fun provideEventsDetailsViewModelFactory(factory: EventsDetailsViewModelFactory): ViewModelProvider.Factory = factory
+
+    @Provides
+    fun providePersonDetailsViewModelFactory(factory: PersonDetailsViewModelFactory): ViewModelProvider.Factory = factory
 }

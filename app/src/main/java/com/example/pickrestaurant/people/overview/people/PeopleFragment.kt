@@ -2,6 +2,7 @@ package com.example.pickrestaurant.people.overview.people
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
@@ -10,6 +11,8 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.pickrestaurant.people.R
 import com.example.pickrestaurant.people.model.User
+import com.example.pickrestaurant.people.personDetails.PersonDetailsActivity
+import com.example.pickrestaurant.people.utils.USERID
 import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_people.*
 import javax.inject.Inject
@@ -56,8 +59,10 @@ class PeopleFragment: Fragment() {
 
     private fun clickHandler(): PeopleAdapter.OnItemClickListener {
         return object : PeopleAdapter.OnItemClickListener {
-            override fun onItemClick(item: User, position: Int) {
-
+            override fun onItemClick(user: User, position: Int) {
+                val intent = Intent(activity, PersonDetailsActivity::class.java)
+                intent.putExtra(USERID, user.userId)
+                startActivity(intent)
             }
         }
     }

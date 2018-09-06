@@ -2,6 +2,12 @@ package com.example.pickrestaurant.people.utils
 
 import android.content.Context
 import android.graphics.Bitmap
+import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory
+import android.widget.ImageView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.target.BitmapImageViewTarget
+import com.example.pickrestaurant.people.model.User
+import kotlinx.android.synthetic.main.activity_people_details.*
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
@@ -44,4 +50,18 @@ fun Bitmap.toFile(context: Context, filename: String): File {
     fos.flush()
     fos.close()
     return f
+}
+
+fun User.loadImage(context: Context, imageView: ImageView) {
+    Glide.with(context)
+            .load(BUCKET_URL + this.pictureUrl)
+            .asBitmap()
+            .centerCrop()
+            .into(object : BitmapImageViewTarget(imageView) {
+                override fun setResource(resource: Bitmap) {
+                    val circularBitmapDrawable = RoundedBitmapDrawableFactory.create(context.resources, resource)
+                    circularBitmapDrawable.isCircular = true
+                    imageView.setImageDrawable(circularBitmapDrawable)
+                }
+            })
 }

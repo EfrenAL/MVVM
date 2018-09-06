@@ -2,6 +2,7 @@ package com.example.pickrestaurant.people.injection.module
 
 import com.example.pickrestaurant.people.login.LoginActivity
 import com.example.pickrestaurant.people.overview.OverviewActivity
+import com.example.pickrestaurant.people.personDetails.PersonDetailsActivity
 import com.example.pickrestaurant.people.signup.SignUpActivity
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
@@ -19,4 +20,7 @@ abstract class BuildersModule {
 
     @ContributesAndroidInjector
     abstract fun contributeSignUpActivity(): SignUpActivity
+
+    @ContributesAndroidInjector
+    abstract fun contributePersonDetailsActivity(): PersonDetailsActivity
 }

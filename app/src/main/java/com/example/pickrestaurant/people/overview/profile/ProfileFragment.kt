@@ -9,17 +9,14 @@ import android.graphics.Bitmap
 import android.os.Bundle
 import android.provider.MediaStore
 import android.support.v4.app.Fragment
-import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.target.BitmapImageViewTarget
 import com.example.pickrestaurant.people.R
 import com.example.pickrestaurant.people.signup.SignUpActivity
-import com.example.pickrestaurant.people.utils.BUCKET_URL
 import com.example.pickrestaurant.people.utils.PARENT
 import com.example.pickrestaurant.people.utils.SIGNUP
+import com.example.pickrestaurant.people.utils.loadImage
 import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_profile.*
 import kotlinx.android.synthetic.main.fragment_profile_content2.*
@@ -61,30 +58,15 @@ class ProfileFragment : Fragment() {
     }
 
     private fun updateUi() {
-        et_email.setText(viewModel.user.value!!.email)
-        et_name.setText(viewModel.user.value!!.name)
-        et_description.setText(viewModel.user.value!!.description)
+        var user = viewModel.user.value!!
+        et_email.setText(user.email)
+        et_name.setText(user.name)
+        et_description.setText(user.description)
 
-        var pictureUrl = viewModel.user.value!!.pictureUrl
-        if (pictureUrl!= null && pictureUrl.isNotEmpty())
-            processImage(pictureUrl)
+        if (user.pictureUrl!= null && user.pictureUrl.isNotEmpty())
+            user.loadImage(context!!, iv_profile_pic)
 
         btn_update.setOnClickListener { viewModel.updateUser(et_name.text.toString(), et_description.text.toString(), "") }
-    }
-
-    private fun processImage(pictureUrl: String) {
-
-        Glide.with(context)
-                .load(BUCKET_URL + pictureUrl)
-                .asBitmap()
-                .centerCrop()
-                .into(object : BitmapImageViewTarget(iv_profile_pic) {
-                    override fun setResource(resource: Bitmap) {
-                        val circularBitmapDrawable = RoundedBitmapDrawableFactory.create(context!!.resources, resource)
-                        circularBitmapDrawable.isCircular = true
-                        iv_profile_pic.setImageDrawable(circularBitmapDrawable)
-                    }
-                })
     }
 
     private fun setFab() {

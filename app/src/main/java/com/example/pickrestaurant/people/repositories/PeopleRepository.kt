@@ -1,5 +1,6 @@
 package com.example.pickrestaurant.people.repositories
 
+import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.view.View
 import com.example.pickrestaurant.people.R
@@ -54,6 +55,17 @@ class PeopleRepository @Inject constructor(private val myApi: MyApi) {
 
     private fun onRetrieveSuccess(peopleResponse: Response<PeopleResponse>?) {
         data.value = peopleResponse!!.body()!!.users
+    }
+
+    fun getPeopleDetails(peopleId: Int): MutableLiveData<User> {
+        for (user in data.value!!){
+            if(user.userId == peopleId) {
+                var newUser =  MutableLiveData<User>()
+                newUser.value = user
+                return newUser
+            }
+        }
+        return MutableLiveData()
     }
 
 }
