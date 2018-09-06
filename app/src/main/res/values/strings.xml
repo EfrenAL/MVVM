@@ -11,4 +11,6 @@
     <string name="update">Update</string>
     <string name="website">Website</string>
     <string name="share">Share</string>
+    <string name="facebook_app_id">450511698776396</string>
+    <string name="fb_login_protocol_scheme">fb450511698776396</string>
 </resources>
