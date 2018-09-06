@@ -1,18 +1,25 @@
 package com.example.pickrestaurant.people.overview
 
+import android.content.Intent
+import android.os.Build
 import android.os.Bundle
+import android.support.v4.app.ActivityOptionsCompat
 import android.support.v4.app.Fragment
+import android.support.v4.view.ViewCompat
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.ImageView
 import com.amazonaws.mobile.client.AWSMobileClient
 import com.example.pickrestaurant.people.R
 import com.example.pickrestaurant.people.overview.event.EventsFragment
 import com.example.pickrestaurant.people.overview.events.EventsDetailsFragment
 import com.example.pickrestaurant.people.overview.people.PeopleFragment
 import com.example.pickrestaurant.people.overview.profile.ProfileFragment
+import com.example.pickrestaurant.people.personDetails.PersonDetailsActivity
 import com.example.pickrestaurant.people.utils.OVERVIEW
 import com.example.pickrestaurant.people.utils.PARENT
+import com.example.pickrestaurant.people.utils.USERID
 import dagger.android.AndroidInjection
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
@@ -23,7 +30,7 @@ import javax.inject.Inject
 /**
  * Created by efren.lamolda on 13.07.18.
  */
-class OverviewActivity : AppCompatActivity(), HasSupportFragmentInjector, EventsFragment.DataPassListener {
+class OverviewActivity : AppCompatActivity(), HasSupportFragmentInjector, EventsFragment.DataPassListener, PeopleFragment.StartActivityWithAnimation {
 
     @Inject
     lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
@@ -40,7 +47,6 @@ class OverviewActivity : AppCompatActivity(), HasSupportFragmentInjector, Events
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_overview)
-        //toolbar_main.title = getString(R.string.app_name)
 
         AndroidInjection.inject(this) //configureDagger
 
@@ -104,7 +110,6 @@ class OverviewActivity : AppCompatActivity(), HasSupportFragmentInjector, Events
         args.putInt(PARENT, OVERVIEW)
         profileFragment.arguments = args
 
-
         supportFragmentManager.popBackStackImmediate()
 
         supportFragmentManager.beginTransaction()
@@ -117,26 +122,28 @@ class OverviewActivity : AppCompatActivity(), HasSupportFragmentInjector, Events
 
     private fun showMainFragments(): Boolean {
 
-        //hideFragment(profileFragment)
-        //hideFragment(eventsDetailsFragment)
-
         supportFragmentManager.popBackStackImmediate()
         supportFragmentManager.beginTransaction()
                 .replace(R.id.fr_events, eventsFragment, null)
                 .replace(R.id.fr_people, peopleFragment, null)
                 .commit()
 
-
         return true
     }
 
-    private fun hideFragment(fragment: Fragment) {
-        //if (fragment.isAdded)
-            supportFragmentManager.popBackStackImmediate()
+    override fun startActivity(userId: Int, sharedElement: ImageView) {
+        val intent = Intent(this, PersonDetailsActivity::class.java)
+        intent.putExtra(USERID, userId)
 
-            /*supportFragmentManager.beginTransaction()
-                    .hide(fragment)
-                    .commit()*/
+        ActivityOptionsCompat.makeSceneTransitionAnimation(this)
+
+        val options = ActivityOptionsCompat.makeSceneTransitionAnimation(this,
+                sharedElement, ViewCompat.getTransitionName(sharedElement)!!)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            startActivity(intent, options.toBundle())
+        } else
+            startActivity(intent)
     }
 
 
