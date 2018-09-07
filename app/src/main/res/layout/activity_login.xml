@@ -19,26 +19,25 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:orientation="vertical"
-            android:layout_marginBottom="32dp">
+            android:layout_marginBottom="32dp"
+            android:orientation="vertical">
 
             <ImageView
                 android:layout_width="125dp"
                 android:layout_height="125dp"
                 android:layout_marginBottom="24dp"
-                app:srcCompat="@drawable/ic_logo_24"
-                android:text="Login" />
+                android:text="Login"
+                app:srcCompat="@drawable/ic_logo_24" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="ElephApp"
-                android:typeface="serif"
-                android:textSize="24sp"/>
+                android:textSize="24sp"
+                android:typeface="serif" />
 
         </LinearLayout>
-
 
 
         <android.support.design.widget.TextInputLayout
@@ -52,8 +51,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Email"
-                android:text="efren1@test.com"
-                android:inputType="textEmailAddress" />
+                android:inputType="textEmailAddress"
+                android:text="efren1@test.com" />
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
@@ -67,8 +66,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Password"
-                android:text="1234567"
-                android:inputType="textPassword" />
+                android:inputType="textPassword"
+                android:text="1234567" />
         </android.support.design.widget.TextInputLayout>
 
         <android.support.v7.widget.AppCompatButton
@@ -78,16 +77,62 @@
             android:layout_marginBottom="24dp"
             android:layout_marginTop="24dp"
             android:background="@color/colorPrimaryLight"
-            android:textColor="@android:color/white"
             android:padding="12dp"
-            android:text="Login" />
+            android:text="Login"
+            android:textColor="@android:color/white" />
+
+        <!-- Separator line -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true">
+
+            <TextView
+                android:id="@+id/tvText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:text="@string/or"
+                android:textColor="@color/dark_grey" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@id/tvText"
+                android:background="@color/dark_grey" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/tvText"
+                android:background="@color/dark_grey" />
+
+        </RelativeLayout>
+
+
+        <com.facebook.login.widget.LoginButton
+            android:id="@+id/btn_fb"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="15dp"
+            android:layout_marginTop="15dp"
+            android:paddingBottom="12dp"
+            android:paddingLeft="24dp"
+            android:paddingTop="12dp" />
 
         <TextView
             android:id="@+id/link_signup"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="24dp"
+            android:layout_marginTop="15dp"
             android:clickable="true"
+            android:padding="12dp"
             android:gravity="center"
             android:text="No account yet? Create one"
             android:textSize="16dip" />
@@ -98,6 +143,6 @@
             android:layout_height="wrap_content"
             android:padding="10dp"
             android:progress="0"
-            android:visibility="gone"/>
+            android:visibility="gone" />
     </LinearLayout>
 </ScrollView>
