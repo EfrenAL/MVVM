@@ -12,10 +12,8 @@ import com.example.pickrestaurant.people.R
 import com.example.pickrestaurant.people.overview.OverviewActivity
 import com.example.pickrestaurant.people.signup.SignUpActivity
 import com.facebook.*
-import com.facebook.login.LoginResult
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_login.*
-import org.json.JSONObject
 import java.util.*
 import javax.inject.Inject
 
@@ -32,7 +30,6 @@ class LoginActivity : AppCompatActivity() {
 
     private var errorSnackbar: Snackbar? = null
     private lateinit var callbackManager: CallbackManager
-    private var mAccessToken: AccessToken? = null
 
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -47,14 +44,14 @@ class LoginActivity : AppCompatActivity() {
 
         callbackManager = CallbackManager.Factory.create()
 
+        initViewModel()
         initUi()
+    }
 
+    private fun initViewModel() {
         viewModel = ViewModelProviders.of(this, loginViewModelFactory).get(LoginViewModel::class.java)
-
         viewModel.loadingVisibility.observe(this, Observer { progressBar.visibility = it!! })
-
         viewModel.errorMessage.observe(this, Observer { showError(it) })
-
         viewModel.loginSuccess.observe(this, Observer { if (it == true) startActivity(Intent(this, OverviewActivity::class.java)) })
     }
 
@@ -82,42 +79,7 @@ class LoginActivity : AppCompatActivity() {
         btn_fb.setReadPermissions(Arrays.asList("email", "public_profile"))
         btn_fb.authType = "rerequest" //Check what is it
 
-        btn_fb.registerCallback(callbackManager, object : FacebookCallback<LoginResult> {
-            override fun onSuccess(loginResult: LoginResult) {
-                println("FB: SUCCESS!!")
-                mAccessToken = loginResult.accessToken
-                getUserProfile(loginResult.accessToken)
-            }
-
-            override fun onCancel() {
-                println("FB: CANCELED!!")
-                setResult(RESULT_CANCELED)
-                finish()
-            }
-
-            override fun onError(exception: FacebookException) {
-                println("FB: ERROR!!")
-            }
-        })
-    }
-
-    fun getUserProfile(currentAccessToken: AccessToken) {
-        println("FB: GET PROFILE!!")
-        println("FB: Token:" + currentAccessToken.token)
-
-        var request: GraphRequest = GraphRequest.newMeRequest(currentAccessToken) { obj: JSONObject, response: GraphResponse -> printValues(response, obj)}
-
-        val parameters = Bundle()
-        parameters.putString("fields", "id,name,email,picture,birthday")
-        request.parameters = parameters
-        request.executeAsync()
-
-        println("FB: successful" + request.accessToken)
-    }
-
-    private fun printValues(graphResponse: GraphResponse, obj: JSONObject) {
-        println("FB: " + obj.toString())
-        println("FB: " + obj.getString("email"))
+        btn_fb.registerCallback(callbackManager, viewModel.loginSignUpUserFacebook())
     }
 
 }

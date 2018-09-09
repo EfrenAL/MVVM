@@ -54,7 +54,7 @@ fun Bitmap.toFile(context: Context, filename: String): File {
 
 fun User.loadImage(context: Context, imageView: ImageView) {
     Glide.with(context)
-            .load(BUCKET_URL + this.pictureUrl)
+            .load(/*BUCKET_URL +*/ this.pictureUrl)
             .asBitmap()
             .centerCrop()
             .into(object : BitmapImageViewTarget(imageView) {

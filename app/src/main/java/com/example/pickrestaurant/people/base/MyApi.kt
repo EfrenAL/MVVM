@@ -18,6 +18,9 @@ interface MyApi {
     @POST("/user/login")
     fun loginUser(@Body user: UserLoginPostParameter): Observable<Response<User>>
 
+    @POST("/user/facebook")
+    fun loginSignUpUserFacebook(@Body user: UserLoginSignUpFbPostParameter): Observable<Response<User>>
+
     @PUT("/user")
     fun updateUser(@Header("Auth") auth: String, @Body user: UserUpdatePutParameter): Observable<Response<User>>
 
@@ -33,6 +36,8 @@ interface MyApi {
 }
 
 data class UserLoginPostParameter(var email: String, var password: String)
+
+data class UserLoginSignUpFbPostParameter(var email: String, var name: String, var token: String, var pictureUrl: String)
 
 data class UserSignUpPostParameter(var name: String, var email: String, var password: String)
 

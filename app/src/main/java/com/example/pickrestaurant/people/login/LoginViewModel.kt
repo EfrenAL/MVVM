@@ -6,6 +6,8 @@ import android.arch.lifecycle.ViewModel
 import android.view.View
 import com.example.pickrestaurant.people.model.User
 import com.example.pickrestaurant.people.repositories.UserRepository
+import com.facebook.FacebookCallback
+import com.facebook.login.LoginResult
 import javax.inject.Inject
 
 /**
@@ -13,19 +15,12 @@ import javax.inject.Inject
  */
 class LoginViewModel @Inject constructor(private var userRepo: UserRepository): ViewModel() {
 
-
-    private lateinit var email: String
-    private lateinit var password: String
-
     var loadingVisibility: MutableLiveData<Int> = MutableLiveData()
     var loginSuccess: MutableLiveData<Boolean> = MutableLiveData()
     var errorMessage: MutableLiveData<Int> = MutableLiveData()
-    val errorClickListener = View.OnClickListener { loginUser(this.email, this.password) }
-
-    var user: LiveData<User>
+    var user: LiveData<User> = userRepo.data
 
     init {
-        user = userRepo.data
         loadingVisibility = userRepo.loadingVisibility
         errorMessage = userRepo.errorMessage
         loginSuccess = userRepo.loginSuccess
@@ -41,5 +36,9 @@ class LoginViewModel @Inject constructor(private var userRepo: UserRepository): 
     override fun onCleared() {
         super.onCleared()
         userRepo.subscription.dispose()
+    }
+
+    fun loginSignUpUserFacebook(): FacebookCallback<LoginResult>? {
+        return userRepo.getUserTokenFacebook()
     }
 }

@@ -3,6 +3,7 @@ package com.example.pickrestaurant.people.repositories
 import android.arch.lifecycle.MutableLiveData
 import android.content.Context
 import android.graphics.Bitmap
+import android.os.Bundle
 import android.util.Log
 import android.view.View
 import com.amazonaws.mobile.client.AWSMobileClient
@@ -11,16 +12,18 @@ import com.amazonaws.mobileconnectors.s3.transferutility.TransferState
 import com.amazonaws.mobileconnectors.s3.transferutility.TransferUtility
 import com.amazonaws.services.s3.AmazonS3Client
 import com.example.pickrestaurant.people.R
-import com.example.pickrestaurant.people.base.MyApi
-import com.example.pickrestaurant.people.base.UserLoginPostParameter
-import com.example.pickrestaurant.people.base.UserSignUpPostParameter
-import com.example.pickrestaurant.people.base.UserUpdatePutParameter
+import com.example.pickrestaurant.people.base.*
 import com.example.pickrestaurant.people.model.User
+import com.example.pickrestaurant.people.utils.BUCKET_URL
 import com.example.pickrestaurant.people.utils.md5
 import com.example.pickrestaurant.people.utils.toFile
+import com.facebook.*
+import com.facebook.login.LoginResult
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import org.json.JSONArray
+import org.json.JSONObject
 import retrofit2.Response
 import java.io.File
 import javax.inject.Inject
@@ -43,9 +46,11 @@ class UserRepository @Inject constructor(private val myApi: MyApi, private val c
 
     private lateinit var authToken: String
 
+    private var mAccessToken: AccessToken? = null
+
     fun signUpUser(name: String, email: String, password: String) {
 
-        if (name.isNullOrBlank() || email.isNullOrBlank() || password.isNullOrBlank()){
+        if (name.isNullOrBlank() || email.isNullOrBlank() || password.isNullOrBlank()) {
             onRetrieveError()
             return
         }
@@ -63,7 +68,7 @@ class UserRepository @Inject constructor(private val myApi: MyApi, private val c
 
     fun loginUser(email: String, password: String) {
 
-        if (email.isNullOrBlank() || password.isNullOrBlank()){
+        if (email.isNullOrBlank() || password.isNullOrBlank()) {
             onRetrieveError()
             return
         }
@@ -78,6 +83,20 @@ class UserRepository @Inject constructor(private val myApi: MyApi, private val c
                         { onRetrieveError() }
                 )
     }
+
+    private fun loginSignUpUserFacebook(email: String, name: String, pictureUrl: String, token: String) {
+
+        subscription = myApi.loginSignUpUserFacebook(UserLoginSignUpFbPostParameter(email, name, token, pictureUrl))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe { onRetrieveStart() }
+                .doOnTerminate { onRetrieveFinish() }
+                .subscribe(
+                        { onRetrieveSuccess(it) },
+                        { onRetrieveError() }
+                )
+    }
+
 
     private fun onRetrieveError() {
         loginSuccess.value = false
@@ -160,8 +179,8 @@ class UserRepository @Inject constructor(private val myApi: MyApi, private val c
             override fun onStateChanged(id: Int, state: TransferState) {
                 if (state == TransferState.COMPLETED) {
 
-                    var desc = if (data.value!!.description!=null) data.value!!.description  else ""
-                    updateUser(data.value!!.name, desc , remote)
+                    var desc = if (data.value!!.description != null) data.value!!.description else ""
+                    updateUser(data.value!!.name, desc, BUCKET_URL + remote)
                 }
             }
 
@@ -180,5 +199,37 @@ class UserRepository @Inject constructor(private val myApi: MyApi, private val c
         if (uploadObserver.state == TransferState.COMPLETED) {
             // Handle a completed upload.
         }
+    }
+
+    fun getUserTokenFacebook(): FacebookCallback<LoginResult>? {
+        return object : FacebookCallback<LoginResult> {
+            override fun onSuccess(loginResult: LoginResult) {
+                //We get user token first. Use this to get user data
+                mAccessToken = loginResult.accessToken
+                getUserProfile(loginResult.accessToken)
+            }
+
+            override fun onCancel() {}
+
+            override fun onError(exception: FacebookException) {
+                onRetrieveError()
+            }
+        }
+    }
+
+    fun getUserProfile(currentAccessToken: AccessToken) {
+
+        var request: GraphRequest = GraphRequest.newMeRequest(currentAccessToken) { obj: JSONObject, response: GraphResponse -> createAccount(response, obj) }
+        val parameters = Bundle()
+        parameters.putString("fields", "id, name, email, picture, birthday")
+        request.parameters = parameters
+        request.executeAsync()
+    }
+
+    private fun createAccount(graphResponse: GraphResponse, obj: JSONObject) {
+
+        var url = JSONObject(JSONObject(obj.getString("picture")).getString("data")).getString("url")
+
+        loginSignUpUserFacebook(obj.getString("email"), obj.getString("name"), url , mAccessToken!!.token)
     }
 }
